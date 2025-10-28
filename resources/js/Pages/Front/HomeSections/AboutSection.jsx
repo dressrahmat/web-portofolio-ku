@@ -31,28 +31,16 @@ export default function AboutSection() {
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 0.8 }}
                     >
-                        <div className="w-full h-96 bg-gradient-to-br from-gray-100 to-blue-100 dark:from-gray-800 dark:to-blue-900/30 rounded-lg flex items-center justify-center relative overflow-hidden">
-                            {/* Efek gradient pada gambar */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-30"></div>
-                            <div className="text-center relative z-10">
-                                <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <svg
-                                        className="w-10 h-10 text-white"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={1.5}
-                                            d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-                                        />
-                                    </svg>
-                                </div>
-                                <span className="text-gray-600 dark:text-gray-300 font-medium">
-                                    Fullstack Developer
-                                </span>
+                        <div className="overflow-hidden">
+                            {/* Container untuk foto dengan rasio 4:5 */}
+                            <div className="h-full relative border-b-8 border-yellow-400 rounded-lg shadow-lg">
+                                <img
+                                    src="/assets/images/me.png"
+                                    alt="Profile Photo"
+                                    className="w-full h-full object-cover "
+                                />
+                                {/* Efek gradient overlay */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-30 rounded-lg"></div>
                             </div>
                         </div>
                     </motion.div>
@@ -87,7 +75,7 @@ export default function AboutSection() {
                             My background working with various{" "}
                             <span className="font-semibold text-gray-900 dark:text-gray-100">
                                 Islamic institutions
-                            </span>
+                            </span>{" "}
                             across{" "}
                             <span className="font-semibold text-gray-900 dark:text-gray-100">
                                 Malang, Jogja, and Pontianak
