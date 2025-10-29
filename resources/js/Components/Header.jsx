@@ -43,28 +43,28 @@ export default function Header({ settings }) {
                             href="#about"
                             className="text-sm font-medium hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
                         >
-                            About
+                            Tentang
                         </a>
                         <a
                             href="#portfolio"
                             className="text-sm font-medium hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
                         >
-                            Work
+                            Karya
                         </a>
-                        <a
+                        {/* <a
                             href="#articles"
                             className="text-sm font-medium hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
                         >
                             Articles
-                        </a>
-                        <a
+                        </a> */}
+                        {/* <a
                             href="#contact"
                             className="text-sm font-medium hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
                         >
                             Contact
-                        </a>
+                        </a> */}
                         <motion.a
-                            href="#contact"
+                            href="https://wa.me/6289530519448"
                             className="px-4 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded text-sm font-medium hover:opacity-90 transition-opacity"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}

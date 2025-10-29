@@ -1,4 +1,4 @@
-// PortfolioSection.jsx - Disesuaikan dengan proyek actual
+// PortfolioSection.jsx - Bahasa Sederhana untuk Marketing Communication
 import { motion } from "framer-motion";
 import AnimatedSection from "@/Components/AnimatedSection";
 import { useState, useEffect, useCallback } from "react";
@@ -6,16 +6,26 @@ import { useState, useEffect, useCallback } from "react";
 export default function PortfolioSection() {
     const portfolioItems = [
         {
-            title: "TV Info Masjid Digital",
+            title: "Sistem Informasi Digital untuk Masjid",
             description:
-                "Sistem informasi masjid digital yang menampilkan jadwal sholat otomatis dengan logika adzan dan iqomah, serta CMS untuk mengelola konten media. Dilengkapi dengan fitur CRUD untuk informasi pengumuman dan konten edukasi.",
-            category: "Fullstack Development",
-            technologies: ["Laravel", "ReactJs", "MySQL", "API Integration"],
-            features: [
-                "Jadwal Sholat Otomatis",
-                "Logika Adzan & Iqomah",
-                "CMS Media",
-                "CRUD Operations",
+                "Membuat sistem digital yang menampilkan informasi jadwal sholat, pengumuman, dan konten edukasi secara otomatis. Membantu jamaah dapat informasi terbaru dengan mudah dan cepat.",
+            category: "Strategi Komunikasi Digital",
+            marketingHighlights: [
+                "Sistem pengelolaan konten yang mudah",
+                "Penyampaian informasi real-time",
+                "Konten edukasi untuk jamaah",
+                "Media komunikasi dengan komunitas",
+            ],
+            results: [
+                "Jamaah lebih mudah dapat informasi terbaru",
+                "Komunikasi menjadi lebih teratur",
+                "Proses dari manual jadi digital",
+            ],
+            technologies: [
+                "Strategi Konten",
+                "Platform Digital",
+                "Komunikasi",
+                "Desain Informasi",
             ],
             image: [
                 "/assets/images/portofolio_tv/1.png",
@@ -28,16 +38,26 @@ export default function PortfolioSection() {
             highlight: true,
         },
         {
-            title: "Sistem Manajemen Keuangan Yayasan",
+            title: "Sistem Laporan Keuangan",
             description:
-                "Aplikasi akuntansi komprehensif untuk menghitung laba rugi yayasan, melacak pemasukan dan pengeluaran, serta menghasilkan laporan keuangan otomatis. Dibangun dengan fokus pada usability untuk staff non-teknis.",
-            category: "Fullstack Development",
-            technologies: ["Laravel", "Filament", "MySQL", "Tailwind CSS"],
-            features: [
-                "Perhitungan Laba/Rugi",
-                "Tracking Cashflow",
+                "Membuat sistem yang mengubah data keuangan rumit menjadi laporan yang mudah dibaca dan dipahami. Membantu pengurus yayasan membuat keputusan bisnis yang lebih baik.",
+            category: "Komunikasi Bisnis",
+            marketingHighlights: [
+                "Tampilan data yang mudah dimengerti",
+                "Laporan otomatis",
+                "Alat komunikasi untuk tim",
+                "Transparansi keuangan",
+            ],
+            results: [
+                "Laporan keuangan lebih jelas dan mudah dibaca",
+                "Proses pengambilan keputusan lebih cepat",
+                "Komunikasi internal lebih lancar",
+            ],
+            technologies: [
+                "Komunikasi Data",
                 "Laporan Otomatis",
-                "Multi-user Access",
+                "Manajemen Tim",
+                "Analisis Bisnis",
             ],
             image: [
                 "/assets/images/portofolio_keuangan/1.png",
@@ -47,22 +67,26 @@ export default function PortfolioSection() {
             highlight: true,
         },
         {
-            title: "Sistem Layanan Terpadu",
+            title: "Platform Layanan Pelanggan",
             description:
-                "Platform untuk menyimpan dan mengelola data pelayanan dengan fitur pencarian, filtering, dan reporting. Mengoptimalkan proses administrasi pelayanan dengan workflow yang terstruktur.",
-            category: "Fullstack Development",
-            technologies: [
-                "Laravel",
-                "React.js",
-                "Tailwind CSS",
-                "Framer Motion",
-                "MySQL",
+                "Membuat platform yang memudahkan komunikasi dengan pelanggan. Sistem ini membantu mencatat, mencari, dan mengelola semua informasi layanan dengan rapi.",
+            category: "Komunikasi Pelanggan",
+            marketingHighlights: [
+                "Satu saluran komunikasi terpadu",
+                "Pengelolaan informasi layanan",
+                "Pengalaman pelanggan yang lebih baik",
+                "Komunikasi multi-saluran",
             ],
-            features: [
-                "Data Management",
-                "Advanced Search",
-                "Service Tracking",
-                "Report Generation",
+            results: [
+                "Pelanggan lebih puas dengan layanan",
+                "Respons lebih cepat untuk pertanyaan",
+                "Informasi tersimpan rapi dan konsisten",
+            ],
+            technologies: [
+                "Pemetaan Customer Journey",
+                "Komunikasi Layanan",
+                "Struktur Informasi",
+                "Desain Pengalaman",
             ],
             image: [
                 "/assets/images/portofolio_layanan/1.png",
@@ -71,31 +95,27 @@ export default function PortfolioSection() {
                 "/assets/images/portofolio_layanan/4.png",
             ],
         },
-        // {
-        //     title: "Aplikasi Absensi Digital",
-        //     description:
-        //         "Sistem absensi modern dengan fitur presensi real-time, laporan kehadiran, dan manajemen cuti. Mendukung multiple metode presensi dan integrasi dengan sistem payroll.",
-        //     category: "Fullstack Development",
-        //     technologies: ["React Native", "Firebase", "Node.js", "MongoDB"],
-        //     features: [
-        //         "Real-time Attendance",
-        //         "Leave Management",
-        //         "Attendance Reports",
-        //         "Mobile Support",
-        //     ],
-        //     image: "/placeholder.jpg",
-        // },
         {
-            title: "Company Profile Yayasan",
+            title: "Website Profil Perusahaan",
             description:
-                "Website company profile untuk yayasan dengan desain responsif dan konten yang mudah diakses. Menampilkan informasi tentang visi, misi, program, dan kontak yayasan secara profesional.",
-            category: "Frontend Development",
-            technologies: ["Wordpress", "Elementor"],
-            features: [
-                "Responsive Design",
-                "Fast Performance",
-                "SEO Optimized",
-                "Easy Content Management",
+                "Membuat website company profile yang menampilkan visi, misi, dan program yayasan dengan cara yang menarik. Membantu memperkenalkan perusahaan ke lebih banyak orang.",
+            category: "Komunikasi Brand",
+            marketingHighlights: [
+                "Pembangunan identitas brand",
+                "Cerita perusahaan yang menarik",
+                "Media komunikasi dengan publik",
+                "Kehadiran digital yang optimal",
+            ],
+            results: [
+                "Brand lebih dikenal banyak orang",
+                "Informasi perusahaan mudah diakses",
+                "Membangun citra profesional",
+            ],
+            technologies: [
+                "Strategi Brand",
+                "Konten Marketing",
+                "Optimasi SEO",
+                "Kehadiran Digital",
             ],
             image: [
                 "/assets/images/portofolio_company_profile/1.png",
@@ -105,7 +125,7 @@ export default function PortfolioSection() {
         },
     ];
 
-    // Komponen ImageSlider untuk TV Info Masjid Digital
+    // Komponen ImageSlider tetap sama
     const ImageSlider = ({ images, title }) => {
         const [currentSlide, setCurrentSlide] = useState(0);
         const [isPaused, setIsPaused] = useState(false);
@@ -124,10 +144,8 @@ export default function PortfolioSection() {
             setCurrentSlide(index);
         };
 
-        // Auto slide setiap 3 detik
         useEffect(() => {
             if (isPaused || images.length <= 1) return;
-
             const interval = setInterval(nextSlide, 3000);
             return () => clearInterval(interval);
         }, [nextSlide, isPaused, images.length]);
@@ -178,7 +196,6 @@ export default function PortfolioSection() {
                 onMouseEnter={() => setIsPaused(true)}
                 onMouseLeave={() => setIsPaused(false)}
             >
-                {/* Slides */}
                 <div className="relative w-full h-full overflow-hidden">
                     {images.map((image, index) => (
                         <div
@@ -198,11 +215,9 @@ export default function PortfolioSection() {
                     ))}
                 </div>
 
-                {/* Navigation Arrows - Hidden on mobile, show on hover desktop */}
                 <button
                     onClick={prevSlide}
                     className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-1 md:p-2 rounded-full opacity-0 md:group-hover:opacity-100 transition-all duration-200 md:block hidden"
-                    aria-label="Previous slide"
                 >
                     <svg
                         className="w-4 h-4 md:w-5 md:h-5"
@@ -221,7 +236,6 @@ export default function PortfolioSection() {
                 <button
                     onClick={nextSlide}
                     className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-1 md:p-2 rounded-full opacity-0 md:group-hover:opacity-100 transition-all duration-200 md:block hidden"
-                    aria-label="Next slide"
                 >
                     <svg
                         className="w-4 h-4 md:w-5 md:h-5"
@@ -238,11 +252,9 @@ export default function PortfolioSection() {
                     </svg>
                 </button>
 
-                {/* Mobile Navigation Arrows - Always visible on mobile */}
                 <button
                     onClick={prevSlide}
                     className="absolute left-1 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-1 rounded-full md:hidden block"
-                    aria-label="Previous slide"
                 >
                     <svg
                         className="w-4 h-4"
@@ -261,7 +273,6 @@ export default function PortfolioSection() {
                 <button
                     onClick={nextSlide}
                     className="absolute right-1 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-1 rounded-full md:hidden block"
-                    aria-label="Next slide"
                 >
                     <svg
                         className="w-4 h-4"
@@ -278,7 +289,6 @@ export default function PortfolioSection() {
                     </svg>
                 </button>
 
-                {/* Slide Indicators */}
                 <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-1.5">
                     {images.map((_, index) => (
                         <button
@@ -289,17 +299,14 @@ export default function PortfolioSection() {
                                     ? "bg-white scale-125"
                                     : "bg-white/50 hover:bg-white/70"
                             }`}
-                            aria-label={`Go to slide ${index + 1}`}
                         />
                     ))}
                 </div>
 
-                {/* Slide Counter */}
                 <div className="absolute top-2 right-2 bg-black/50 text-white px-1.5 py-0.5 rounded text-xs">
                     {currentSlide + 1} / {images.length}
                 </div>
 
-                {/* Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-50"></div>
             </div>
         );
@@ -317,7 +324,7 @@ export default function PortfolioSection() {
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.6 }}
             >
-                My Portfolio
+                Project Marketing & Komunikasi
             </motion.h2>
 
             <motion.p
@@ -327,9 +334,9 @@ export default function PortfolioSection() {
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.6, delay: 0.1 }}
             >
-                Kumpulan project pengembangan produk digital yang telah saya
-                bangun, menampilkan kemampuan fullstack development dengan fokus
-                pada solusi yang scalable dan user-friendly.
+                Beberapa project yang saya kerjakan, fokus pada cara
+                berkomunikasi yang efektif, meningkatkan hubungan dengan
+                pelanggan, dan membuat sistem informasi yang mudah dipahami
             </motion.p>
 
             <div className="space-y-16 md:space-y-24">
@@ -346,14 +353,6 @@ export default function PortfolioSection() {
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 0.8, delay: index * 0.1 }}
                     >
-                        {/* {item.highlight && (
-                            <div className="absolute top-2 right-2 md:top-4 md:right-4">
-                                <span className="px-2 py-1 md:px-3 md:py-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs font-medium rounded-full">
-                                    Featured Project
-                                </span>
-                            </div>
-                        )} */}
-
                         <div
                             className={`flex flex-col ${
                                 index % 2 === 0
@@ -405,8 +404,59 @@ export default function PortfolioSection() {
                                     {item.description}
                                 </p>
 
-                                {/* Technologies */}
-                                <div className="flex flex-wrap gap-1.5 md:gap-2 mb-3 md:mb-4">
+                                {/* Cara Kerja */}
+                                <div className="mb-4 md:mb-4">
+                                    <h4 className="text-xs md:text-sm font-medium text-gray-900 dark:text-gray-100 mb-1.5 md:mb-2">
+                                        Cara Kerja:
+                                    </h4>
+                                    <div className="flex flex-wrap gap-1.5 md:gap-2">
+                                        {item.marketingHighlights.map(
+                                            (highlight, highlightIndex) => (
+                                                <span
+                                                    key={highlightIndex}
+                                                    className="px-1.5 md:px-2 py-0.5 md:py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs rounded-full"
+                                                >
+                                                    {highlight}
+                                                </span>
+                                            )
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Hasil */}
+                                <div className="mb-4 md:mb-4">
+                                    <h4 className="text-xs md:text-sm font-medium text-gray-900 dark:text-gray-100 mb-1.5 md:mb-2">
+                                        Hasil yang Dicapai:
+                                    </h4>
+                                    <ul className="text-gray-600 dark:text-gray-400 text-xs md:text-sm space-y-1">
+                                        {item.results.map(
+                                            (result, resultIndex) => (
+                                                <li
+                                                    key={resultIndex}
+                                                    className="flex items-start"
+                                                >
+                                                    <svg
+                                                        className="w-3 h-3 md:w-4 md:h-4 text-green-500 mt-0.5 mr-2 flex-shrink-0"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2}
+                                                            d="M5 13l4 4L19 7"
+                                                        />
+                                                    </svg>
+                                                    {result}
+                                                </li>
+                                            )
+                                        )}
+                                    </ul>
+                                </div>
+
+                                {/* Keahlian yang Dipakai */}
+                                <div className="flex flex-wrap gap-1.5 md:gap-2">
                                     {item.technologies.map(
                                         (tech, techIndex) => (
                                             <span
@@ -418,80 +468,11 @@ export default function PortfolioSection() {
                                         )
                                     )}
                                 </div>
-
-                                {/* Features */}
-                                <div className="mb-4 md:mb-6">
-                                    <h4 className="text-xs md:text-sm font-medium text-gray-900 dark:text-gray-100 mb-1.5 md:mb-2">
-                                        Key Features:
-                                    </h4>
-                                    <div className="flex flex-wrap gap-1.5 md:gap-2">
-                                        {item.features.map(
-                                            (feature, featureIndex) => (
-                                                <span
-                                                    key={featureIndex}
-                                                    className="px-1.5 md:px-2 py-0.5 md:py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs rounded-full"
-                                                >
-                                                    {feature}
-                                                </span>
-                                            )
-                                        )}
-                                    </div>
-                                </div>
-
-                                {/* <a
-                                    href="#"
-                                    className="inline-flex items-center text-xs md:text-sm font-medium text-blue-600 dark:text-blue-400 group-hover:underline"
-                                >
-                                    View case study
-                                    <svg
-                                        className="w-3 h-3 md:w-4 md:h-4 ml-1"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M14 5l7 7m0 0l-7 7m7-7H3"
-                                        />
-                                    </svg>
-                                </a> */}
                             </div>
                         </div>
                     </motion.div>
                 ))}
             </div>
-
-            {/* <motion.div
-                className="text-center mt-12 md:mt-16"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-            >
-                <a
-                    href="#"
-                    className="inline-flex items-center px-5 py-2.5 md:px-6 md:py-3 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg font-medium hover:opacity-90 transition-opacity text-sm md:text-base"
-                >
-                    View all projects
-                    <svg
-                        className="w-3 h-3 md:w-4 md:h-4 ml-1"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M14 5l7 7m0 0l-7 7m7-7H3"
-                        />
-                    </svg>
-                </a>
-            </motion.div> */}
         </AnimatedSection>
     );
 }

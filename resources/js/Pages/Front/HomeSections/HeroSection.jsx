@@ -1,16 +1,16 @@
-// HeroSection.jsx - Product Developer & Digital Specialist
+// HeroSection.jsx - Marketing Communication dengan Technical Background
 import { motion } from "framer-motion";
 
 export default function HeroSection() {
     return (
         <section className="min-h-screen flex items-center justify-center px-4 pt-24 pb-16 relative overflow-hidden">
-            {/* Background pertama - Gradient tech-inspired */}
-            <div className="absolute inset-0 -z-10 bg-gradient-to-br from-blue-50/30 via-indigo-50/20 to-cyan-50/20 dark:from-blue-950/40 dark:via-indigo-900/30 dark:to-cyan-950/30"></div>
+            {/* Background gradient */}
+            <div className="absolute inset-0 -z-10 bg-gradient-to-br from-blue-50/30 via-green-50/20 to-cyan-50/20 dark:from-blue-950/40 dark:via-green-900/30 dark:to-cyan-950/30"></div>
 
-            {/* Background kedua - Pola geometris dengan digital information vibe */}
+            {/* Background decorative elements */}
             <div className="absolute inset-0 -z-10 opacity-20">
                 <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-200 dark:bg-blue-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl animate-blob"></div>
-                <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-indigo-200 dark:bg-indigo-800 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl animate-blob animation-delay-2000"></div>
+                <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-green-200 dark:bg-green-800 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl animate-blob animation-delay-2000"></div>
                 <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-cyan-200 dark:bg-cyan-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl animate-blob animation-delay-4000"></div>
             </div>
 
@@ -21,9 +21,9 @@ export default function HeroSection() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
                 >
-                    Product Developer &<br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400">
-                        Digital Specialist
+                    Programmer &<br />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-600 dark:from-blue-400 dark:to-green-400">
+                        Digital Marketing
                     </span>
                 </motion.h1>
 
@@ -35,13 +35,17 @@ export default function HeroSection() {
                 >
                     Membuat{" "}
                     <span className="font-semibold text-gray-900 dark:text-gray-100">
-                        website, aplikasi, dan sistem digital
+                        sistem digital dan aplikasi
                     </span>{" "}
-                    yang berkualitas, dari backend sampai frontend, dilengkapi
-                    dengan strategi pemasaran digital untuk hasil yang maksimal.
+                    yang tidak hanya berfungsi baik, tapi juga mendukung
+                    <span className="font-semibold text-gray-900 dark:text-gray-100">
+                        {" "}
+                        strategi marketing dan komunikasi{" "}
+                    </span>
+                    untuk mencapai tujuan lembaga.
                 </motion.p>
 
-                {/* Skill Highlights */}
+                {/* Skill Highlights - Kombinasi Technical & Marketing */}
                 <motion.div
                     className="flex flex-wrap justify-center gap-2 mb-10 max-w-2xl mx-auto"
                     initial={{ opacity: 0, y: 20 }}
@@ -49,22 +53,22 @@ export default function HeroSection() {
                     transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
                 >
                     <span className="px-3 py-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-xs font-medium">
-                        Pembuatan Website
-                    </span>
-                    <span className="px-3 py-1.5 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 rounded-full text-xs font-medium">
-                        Backend System
-                    </span>
-                    <span className="px-3 py-1.5 bg-cyan-100 dark:bg-cyan-900/30 text-cyan-800 dark:text-cyan-300 rounded-full text-xs font-medium">
-                        Frontend Design
+                        Web Development
                     </span>
                     <span className="px-3 py-1.5 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full text-xs font-medium">
-                        Digital Marketing
+                        Sistem Informasi
+                    </span>
+                    <span className="px-3 py-1.5 bg-cyan-100 dark:bg-cyan-900/30 text-cyan-800 dark:text-cyan-300 rounded-full text-xs font-medium">
+                        Database Management
                     </span>
                     <span className="px-3 py-1.5 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-full text-xs font-medium">
-                        Konten Kreatif
+                        Digital Marketing
                     </span>
                     <span className="px-3 py-1.5 bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 rounded-full text-xs font-medium">
-                        Desain Grafis
+                        Content Strategy
+                    </span>
+                    <span className="px-3 py-1.5 bg-teal-100 dark:bg-teal-900/30 text-teal-800 dark:text-teal-300 rounded-full text-xs font-medium">
+                        Analisis Data
                     </span>
                 </motion.div>
 
@@ -93,11 +97,13 @@ export default function HeroSection() {
                                 d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
                             />
                         </svg>
-                        Lihat Hasil Karya
+                        Lihat Project Saya
                     </motion.a>
 
                     <motion.a
-                        href="#contact"
+                        href="https://wa.me/6289530519448"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="px-6 py-3 border border-gray-300 dark:border-gray-700 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors flex items-center justify-center gap-2 text-sm"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -119,19 +125,19 @@ export default function HeroSection() {
                     </motion.a>
                 </motion.div>
 
-                {/* Quick Stats - Bahasa yang lebih sederhana */}
+                {/* Keahlian Utama - Technical dengan nilai marketing */}
                 <motion.div
-                    className="mt-12 grid grid-cols-2 md:grid-cols-5 gap-4 max-w-2xl mx-auto"
+                    className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.8, delay: 0.6 }}
                 >
                     <div className="text-center">
                         <div className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">
-                            35%
+                            40%
                         </div>
                         <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                            Sistem & Backend
+                            Programming & Development
                         </div>
                     </div>
                     <div className="text-center">
@@ -139,20 +145,12 @@ export default function HeroSection() {
                             25%
                         </div>
                         <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                            Website & Aplikasi
+                            Sistem & Database
                         </div>
                     </div>
                     <div className="text-center">
                         <div className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">
-                            15%
-                        </div>
-                        <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                            Desain & Tampilan
-                        </div>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">
-                            15%
+                            20%
                         </div>
                         <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">
                             Digital Marketing
@@ -160,15 +158,15 @@ export default function HeroSection() {
                     </div>
                     <div className="text-center">
                         <div className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">
-                            10%
+                            15%
                         </div>
                         <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                            Konten Kreatif
+                            Strategy & Communication
                         </div>
                     </div>
                 </motion.div>
 
-                {/* Value Proposition - Bahasa yang mudah dipahami */}
+                {/* Value Proposition - Technical background untuk marketing */}
                 <motion.div
                     className="mt-10 p-6 bg-white/50 dark:bg-gray-800/50 rounded-2xl backdrop-blur-sm border border-gray-200 dark:border-gray-700 max-w-2xl mx-auto"
                     initial={{ opacity: 0, y: 20 }}
@@ -176,9 +174,18 @@ export default function HeroSection() {
                     transition={{ duration: 0.8, delay: 0.7 }}
                 >
                     <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 italic text-center">
-                        "Bisa membuat sistem digital yang bagus di belakang
-                        layar, sekaligus mempromosikannya di depan layar untuk
-                        mencapai target bisnis."
+                        "Dengan background programming yang kuat, saya tidak
+                        hanya bisa menjalankan kampanye marketing, tapi juga{" "}
+                        <strong>
+                            membangun sistem yang mendukung kesuksesan strategi
+                            komunikasi
+                        </strong>{" "}
+                        dan
+                        <strong>
+                            {" "}
+                            menganalisis data untuk hasil yang lebih baik
+                        </strong>
+                        ."
                     </p>
                 </motion.div>
 
