@@ -7,30 +7,46 @@ export default function Footer({ settings }) {
                 {settings?.site_name || "Nama Website"}. All rights reserved.
             </p>
             <div className="mt-4 flex justify-center space-x-6">
-                <a
-                    href="#"
-                    className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
-                >
-                    Twitter
-                </a>
-                <a
-                    href="#"
-                    className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
-                >
-                    LinkedIn
-                </a>
-                <a
-                    href="#"
-                    className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
-                >
-                    Instagram
-                </a>
-                <a
-                    href="#"
-                    className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
-                >
-                    GitHub
-                </a>
+                {settings?.twitter_url && (
+                    <a
+                        href={settings.twitter_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+                    >
+                        Twitter
+                    </a>
+                )}
+                {settings?.linkedin_url && (
+                    <a
+                        href={settings.linkedin_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+                    >
+                        LinkedIn
+                    </a>
+                )}
+                {settings?.instagram_url && (
+                    <a
+                        href={settings.instagram_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+                    >
+                        Instagram
+                    </a>
+                )}
+                {settings?.facebook_url && (
+                    <a
+                        href={settings.facebook_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+                    >
+                        Facebook
+                    </a>
+                )}
             </div>
         </footer>
     );
