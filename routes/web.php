@@ -117,6 +117,25 @@ Route::middleware('auth')->group(function () {
             Route::post('/audit-trail/export', [AuditTrailController::class, 'export'])->name('audit-trail.export');
         });
 
+        // Portofolio
+        Route::resource('portfolios', \App\Http\Controllers\Admin\PortofolioController::class);
+        
+        // Additional routes for technologies, features, and images
+        Route::post('/portfolios/technologies', [\App\Http\Controllers\Admin\PortofolioController::class, 'storeTechnology']);
+        Route::put('/portfolios/technologies/{technology}', [\App\Http\Controllers\Admin\PortofolioController::class, 'updateTechnology']);
+        Route::delete('/portfolios/technologies/{technology}', [\App\Http\Controllers\Admin\PortofolioController::class, 'destroyTechnology']);
+        
+        Route::post('/portfolios/features', [\App\Http\Controllers\Admin\PortofolioController::class, 'storeFeature']);
+        Route::put('/portfolios/features/{feature}', [\App\Http\Controllers\Admin\PortofolioController::class, 'updateFeature']);
+        Route::delete('/portfolios/features/{feature}', [\App\Http\Controllers\Admin\PortofolioController::class, 'destroyFeature']);
+        
+        Route::post('/portfolios/images', [\App\Http\Controllers\Admin\PortofolioController::class, 'storeImage']);
+        Route::put('/portfolios/images/{image}', [\App\Http\Controllers\Admin\PortofolioController::class, 'updateImage']);
+        Route::delete('/portfolios/images/{image}', [\App\Http\Controllers\Admin\PortofolioController::class, 'destroyImage']);
+        
+        Route::post('/portfolios/bulk-destroy', [\App\Http\Controllers\Admin\PortofolioController::class, 'bulkDestroy']);
+        Route::post('/portfolios/bulk-update', [\App\Http\Controllers\Admin\PortofolioController::class, 'bulkUpdate']);
+
     });
 });
 

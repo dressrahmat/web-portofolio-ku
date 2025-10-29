@@ -1,4 +1,4 @@
-// AboutSection.jsx - Disesuaikan dengan pengalaman advertising & programming
+// AboutSection.jsx - Bahasa yang lebih mudah dipahami
 import { motion } from "framer-motion";
 import AnimatedSection from "@/Components/AnimatedSection";
 
@@ -21,7 +21,7 @@ export default function AboutSection() {
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 0.6 }}
                 >
-                    About me
+                    Tentang Saya
                 </motion.h2>
 
                 <div className="grid md:grid-cols-2 gap-16 items-center">
@@ -52,37 +52,31 @@ export default function AboutSection() {
                         transition={{ duration: 0.8, delay: 0.2 }}
                     >
                         <h3 className="text-2xl font-medium mb-6">
-                            My Professional Journey
+                            Perjalanan Profesional Saya
                         </h3>
                         <p className="mb-6 text-gray-600 dark:text-gray-400 leading-relaxed">
-                            With{" "}
+                            Saya memiliki{" "}
                             <span className="font-semibold text-gray-900 dark:text-gray-100">
-                                3 years of fullstack development
+                                2 tahun pengalaman membuat website dan aplikasi
                             </span>{" "}
-                            experience, combined with{" "}
+                            , ditambah{" "}
                             <span className="font-semibold text-gray-900 dark:text-gray-100">
-                                1 year in Meta Ads advertising
-                            </span>{" "}
-                            and
-                            <span className="font-semibold text-gray-900 dark:text-gray-100">
-                                {" "}
-                                content creation
+                                +-1 tahun belajar membuat konten kreatif
                             </span>
-                            , I bring a unique blend of technical expertise and
-                            digital marketing insight to every project.
+                            .
                         </p>
                         <p className="mb-8 text-gray-600 dark:text-gray-400 leading-relaxed">
-                            My background working with various{" "}
+                            Pengalaman bekerja dengan berbagai{" "}
                             <span className="font-semibold text-gray-900 dark:text-gray-100">
-                                Islamic institutions
+                                lembaga Islam
                             </span>{" "}
-                            across{" "}
+                            di{" "}
                             <span className="font-semibold text-gray-900 dark:text-gray-100">
-                                Malang, Jogja, and Pontianak
+                                Malang, Jogja, dan Pontianak
                             </span>{" "}
-                            has given me deep understanding of creating
-                            technology solutions that serve community needs with
-                            cultural sensitivity.
+                            membuat saya lebih memahami bagaimana menciptakan
+                            solusi informasi yang sesuai dengan kebutuhan
+                            lembaga.
                         </p>
 
                         <div className="space-y-4">
@@ -104,15 +98,15 @@ export default function AboutSection() {
                                 </div>
                                 <div>
                                     <h4 className="font-medium">
-                                        Fullstack Development
+                                        Pembuatan Website & Aplikasi
                                     </h4>
                                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                                        3+ years experience
+                                        2+ tahun pengalaman
                                     </p>
                                 </div>
                             </div>
 
-                            <div className="flex items-center">
+                            {/* <div className="flex items-center">
                                 <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mr-4">
                                     <svg
                                         className="w-6 h-6 text-green-600 dark:text-green-400"
@@ -136,13 +130,13 @@ export default function AboutSection() {
                                 </div>
                                 <div>
                                     <h4 className="font-medium">
-                                        Digital Advertising
+                                        Iklan Digital
                                     </h4>
                                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                                        Meta Ads Specialist - 1 year
+                                        Facebook & Instagram Ads - 1 tahun
                                     </p>
                                 </div>
-                            </div>
+                            </div> */}
 
                             <div className="flex items-center">
                                 <div className="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mr-4">
@@ -162,10 +156,10 @@ export default function AboutSection() {
                                 </div>
                                 <div>
                                     <h4 className="font-medium">
-                                        Content Creation
+                                        Konten Kreatif
                                     </h4>
                                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                                        Design & Creative Content - 1 year
+                                        Desain & Konten Media Sosial - 1 tahun
                                     </p>
                                 </div>
                             </div>
@@ -188,10 +182,10 @@ export default function AboutSection() {
                                 </div>
                                 <div>
                                     <h4 className="font-medium">
-                                        Community Focus
+                                        Pengalaman Komunitas
                                     </h4>
                                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                                        Islamic Institutions Experience
+                                        Bekerja dengan Lembaga Islam
                                     </p>
                                 </div>
                             </div>
@@ -209,13 +203,13 @@ export default function AboutSection() {
                 >
                     <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
                         <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                            3+
+                            2+
                         </div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">
-                            Years
+                            Tahun
                         </div>
                         <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                            Fullstack Development
+                            Membuat Website & Aplikasi
                         </div>
                     </div>
 
@@ -224,19 +218,19 @@ export default function AboutSection() {
                             1
                         </div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">
-                            Year
+                            Tahun
                         </div>
                         <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                            Meta Ads & Digital Marketing
+                            Konten Kreatif
                         </div>
                     </div>
 
                     <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
                         <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">
-                            Multiple
+                            3+
                         </div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">
-                            Cities
+                            Kota
                         </div>
                         <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                             Malang, Jogja, Pontianak

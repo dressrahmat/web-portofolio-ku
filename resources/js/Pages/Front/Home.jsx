@@ -9,6 +9,7 @@ import ContactSection from "@/Pages/Front/HomeSections/ContactSection";
 
 export default function Home({
     settings,
+    portfolios, // Tambahkan prop portfolios
     metaTags,
     canLogin,
     canRegister,
@@ -28,9 +29,12 @@ export default function Home({
             <MainLayout settings={settings}>
                 <HeroSection settings={settings} />
                 <AboutSection settings={settings} />
-                <PortfolioSection settings={settings} />
-                <ArticlesSection settings={settings} />
-                <ContactSection settings={settings} />
+                <PortfolioSection
+                    settings={settings}
+                    portfolios={portfolios} // Kirim prop portfolios ke PortfolioSection
+                />
+                {/* <ArticlesSection settings={settings} /> */}
+                {/* <ContactSection settings={settings} /> */}
             </MainLayout>
         </>
     );

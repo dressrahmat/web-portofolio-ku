@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Http\Controllers\Controller;
-use App\Models\Setting;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\Setting;
+use App\Models\Portfolio;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
 
 class BerandaController extends Controller
 {
@@ -23,6 +24,13 @@ class BerandaController extends Controller
             ]);
         }
 
+        // Ambil data portfolio yang published
+        $portfolios = Portfolio::with(['technologies', 'features'])
+            ->where('status', 'published')
+            ->orderBy('sort_order')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         // Data untuk meta tags
         $metaTags = [
             'title' => $settings->site_name,
@@ -34,11 +42,11 @@ class BerandaController extends Controller
 
         return Inertia::render('Front/Home', [
             'settings' => $settings,
+            'portfolios' => $portfolios, // Tambahkan data portfolios
             'metaTags' => $metaTags,
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
         ]);
     }
 
