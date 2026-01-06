@@ -42,6 +42,18 @@ class RolePermissionSeeder extends Seeder
             'view audit trail roles',
             'view audit trail permissions',
             'view audit trail settings',
+
+            // Permissions for portofolio
+            'view portofolio',
+            'create portofolio',
+            'edit portofolio',
+            'delete portofolio',
+
+            // Permissions for kategori
+            'view kategori',
+            'create kategori',
+            'edit kategori',
+            'delete kategori',
         ];
 
         foreach ($permissions as $permission) {

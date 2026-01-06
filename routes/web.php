@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
@@ -8,49 +9,12 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Front\BerandaController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuditTrailController;
+use App\Http\Controllers\Admin\PortofolioController;
+use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\RolePermissionController;
 
 // Route untuk frontend (publik)
 Route::get('/', [BerandaController::class, 'index'])->name('welcome');
-
-// Route untuk menangani semua rute yang tidak terdaftar (404)
-Route::fallback(function (Request $request) {
-    // Jika user terautentikasi tapi tidak memiliki akses
-    if (auth()->check()) {
-        // Cek jika ini seharusnya menjadi 403
-        $path = $request->path();
-        if (str_starts_with($path, 'admin') && ! auth()->user()->hasPermissionTo('access admin panel')) {
-            $inertiaResponse = Inertia::render('Admin/Errors/403', [
-                'auth' => [
-                    'user' => [
-                        'id' => auth()->user()->id,
-                        'name' => auth()->user()->name,
-                        'email' => auth()->user()->email,
-                        'roles' => auth()->user()->getRoleNames()->toArray(),
-                        'permissions' => auth()->user()->getAllPermissions()->pluck('name')->toArray(),
-                    ],
-                ],
-            ]);
-
-            return $inertiaResponse->toResponse($request)->setStatusCode(403);
-        }
-    }
-
-    // Default ke 404
-    $inertiaResponse = Inertia::render('Admin/Errors/404', [
-        'auth' => [
-            'user' => auth()->check() ? [
-                'id' => auth()->user()->id,
-                'name' => auth()->user()->name,
-                'email' => auth()->user()->email,
-                'roles' => auth()->user()->getRoleNames()->toArray(),
-                'permissions' => auth()->user()->getAllPermissions()->pluck('name')->toArray(),
-            ] : null,
-        ],
-    ]);
-
-    return $inertiaResponse->toResponse($request)->setStatusCode(404);
-})->name('fallback');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
@@ -62,81 +26,162 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::prefix('admin')->name('admin.')->middleware(['permission:access admin panel'])->group(function () {
-        // Users
-        Route::get('/users', [UserController::class, 'index'])->middleware(['permission:view users'])->name('users.index');
-        Route::get('/users/create', [UserController::class, 'create'])->middleware(['permission:create users'])->name('users.create');
-        Route::post('/users', [UserController::class, 'store'])->middleware(['permission:create users'])->name('users.store');
-        Route::get('/users/{user}', [UserController::class, 'show'])->middleware(['permission:view users'])->name('users.show');
-        Route::get('/users/{user}/edit', [UserController::class, 'edit'])->middleware(['permission:edit users'])->name('users.edit');
-        Route::put('/users/{user}', [UserController::class, 'update'])->middleware(['permission:edit users'])->name('users.update');
-        Route::delete('/users/{user}', [UserController::class, 'destroy'])->middleware(['permission:delete users'])->name('users.destroy');
+        
+        // Resource Routes untuk Users
+        Route::middleware(['permission:view users'])->group(function () {
+            Route::resource('users', UserController::class)->except(['create', 'store', 'edit', 'update', 'destroy']);
+        });
+        
+        Route::middleware(['permission:create users'])->group(function () {
+            Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+            Route::post('/users', [UserController::class, 'store'])->name('users.store');
+        });
+        
+        Route::middleware(['permission:edit users'])->group(function () {
+            Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+            Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+        });
+        
+        Route::middleware(['permission:delete users'])->group(function () {
+            Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+        });
+        
+        // Bulk operations untuk Users
         Route::post('/users/bulk-destroy', [UserController::class, 'bulkDestroy'])->middleware(['permission:delete users'])->name('users.bulk-destroy');
         Route::post('/users/export', [UserController::class, 'export'])->middleware(['permission:view users'])->name('users.export');
         Route::put('/users/bulk-update', [UserController::class, 'bulkUpdate'])->middleware(['permission:edit users'])->name('users.bulk-update');
 
-        // Roles & Permissions
-        Route::get('/role-permissions', [RolePermissionController::class, 'index'])
-            ->middleware(['permission:view roles', 'permission:view permissions'])
-            ->name('role-permissions.index');
-        Route::get('/roles/create', [RolePermissionController::class, 'createRole'])
-            ->middleware(['permission:create roles'])
-            ->name('roles.create');
-        Route::post('/roles', [RolePermissionController::class, 'storeRole'])
-            ->middleware(['permission:create roles'])
-            ->name('roles.store');
-        Route::get('/roles/{role}/edit', [RolePermissionController::class, 'editRole'])
-            ->middleware(['permission:edit roles'])
-            ->name('roles.edit');
-        Route::put('/roles/{role}', [RolePermissionController::class, 'updateRole'])
-            ->middleware(['permission:edit roles'])
-            ->name('roles.update');
+        // Routes untuk Kategori
+        Route::middleware(['permission:view kategori'])->group(function () {
+            Route::resource('kategori', KategoriController::class);
+        });
+        
+        Route::middleware(['permission:create kategori'])->group(function () {
+            Route::get('/kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
+            Route::post('/kategori', [KategoriController::class, 'store'])->name('kategori.store');
+        });
+        
+        Route::middleware(['permission:edit kategori'])->group(function () {
+            Route::get('/kategori/{kategori}/edit', [KategoriController::class, 'edit'])->name('kategori.edit');
+            Route::put('/kategori/{kategori}', [KategoriController::class, 'update'])->name('kategori.update');
+        });
+        
+        Route::middleware(['permission:delete kategori'])->group(function () {
+            Route::delete('/kategori/{kategori}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
+        });
+        
+        // Bulk operations untuk Kategori
+        Route::post('/kategori/bulk-destroy', [KategoriController::class, 'bulkDestroy'])->middleware(['permission:delete kategori'])->name('kategori.bulk-destroy');
+        Route::post('/kategori/export', [KategoriController::class, 'export'])->middleware(['permission:view kategori'])->name('kategori.export');
+        Route::put('/kategori/bulk-update', [KategoriController::class, 'bulkUpdate'])->middleware(['permission:edit kategori'])->name('kategori.bulk-update');
 
-        Route::get('/permissions/create', [RolePermissionController::class, 'createPermission'])
-            ->middleware(['permission:create permissions'])
-            ->name('permissions.create');
-        Route::post('/permissions', [RolePermissionController::class, 'storePermission'])
-            ->middleware(['permission:create permissions'])
-            ->name('permissions.store');
-        Route::get('/permissions/{permission}/edit', [RolePermissionController::class, 'editPermission'])->middleware(['permission:edit permissions'])->name('permissions.edit');
-        Route::put('/permissions/{permission}', [RolePermissionController::class, 'updatePermission'])->middleware(['permission:edit permissions'])->name('permissions.update');
+        // Roles & Permissions
+        Route::middleware(['permission:view roles', 'permission:view permissions'])->group(function () {
+            Route::get('/role-permissions', [RolePermissionController::class, 'index'])->name('role-permissions.index');
+        });
+        
+        Route::prefix('roles')->name('roles.')->middleware(['permission:view roles'])->group(function () {
+            Route::middleware(['permission:create roles'])->group(function () {
+                Route::get('/create', [RolePermissionController::class, 'createRole'])->name('create');
+                Route::post('/', [RolePermissionController::class, 'storeRole'])->name('store');
+            });
+            
+            Route::middleware(['permission:edit roles'])->group(function () {
+                Route::get('/{role}/edit', [RolePermissionController::class, 'editRole'])->name('edit');
+                Route::put('/{role}', [RolePermissionController::class, 'updateRole'])->name('update');
+            });
+        });
+        
+        Route::prefix('permissions')->name('permissions.')->middleware(['permission:view permissions'])->group(function () {
+            Route::middleware(['permission:create permissions'])->group(function () {
+                Route::get('/create', [RolePermissionController::class, 'createPermission'])->name('create');
+                Route::post('/', [RolePermissionController::class, 'storePermission'])->name('store');
+            });
+            
+            Route::middleware(['permission:edit permissions'])->group(function () {
+                Route::get('/{permission}/edit', [RolePermissionController::class, 'editPermission'])->name('edit');
+                Route::put('/{permission}', [RolePermissionController::class, 'updatePermission'])->name('update');
+            });
+        });
 
         // Settings
-        Route::get('/settings', [SettingController::class, 'index'])->middleware(['permission:view settings'])->name('settings.index');
-        Route::put('/settings', [SettingController::class, 'update'])->middleware(['permission:edit settings'])->name('settings.update');
-        Route::delete('/settings/images/{type}', [SettingController::class, 'removeImage'])->middleware(['permission:edit settings'])->name('settings.removeImage');
-        Route::post('/settings/upload-logo', [SettingController::class, 'uploadLogoOnly'])->middleware(['permission:edit settings'])->name('settings.upload-logo');
-        Route::post('/settings/upload-favicon', [SettingController::class, 'uploadFaviconOnly'])->middleware(['permission:edit settings'])->name('settings.upload-favicon');
-        Route::post('/settings/upload-og-image', [SettingController::class, 'uploadOgImageOnly'])->middleware(['permission:edit settings'])->name('settings.upload-og-image');
+        Route::prefix('settings')->name('settings.')->group(function () {
+            Route::get('/', [SettingController::class, 'index'])->middleware(['permission:view settings'])->name('index');
+            Route::middleware(['permission:edit settings'])->group(function () {
+                Route::put('/', [SettingController::class, 'update'])->name('update');
+                Route::delete('/images/{type}', [SettingController::class, 'removeImage'])->name('removeImage');
+                Route::post('/upload-logo', [SettingController::class, 'uploadLogoOnly'])->name('upload-logo');
+                Route::post('/upload-favicon', [SettingController::class, 'uploadFaviconOnly'])->name('upload-favicon');
+                Route::post('/upload-og-image', [SettingController::class, 'uploadOgImageOnly'])->name('upload-og-image');
+            });
+        });
 
-        // Audit Trail - no changes needed as it was already using 'view' permission
-        Route::middleware(['permission:view audit trail'])->group(function () {
-            Route::get('/audit-trail/notifications', [AuditTrailController::class, 'notifications'])->name('audit-trail.notifications');
-            Route::get('/audit-trail', [AuditTrailController::class, 'index'])->name('audit-trail.index');
-            Route::get('/audit-trail/{audit_trail}', [AuditTrailController::class, 'show'])->name('audit-trail.show');
-            Route::delete('/audit-trail/cleanup', [AuditTrailController::class, 'cleanup'])->name('audit-trail.cleanup');
-            Route::post('/audit-trail/export', [AuditTrailController::class, 'export'])->name('audit-trail.export');
+        // Audit Trail
+        Route::prefix('audit-trail')->name('audit-trail.')->middleware(['permission:view audit trail'])->group(function () {
+            Route::get('/notifications', [AuditTrailController::class, 'notifications'])->name('notifications');
+            Route::get('/', [AuditTrailController::class, 'index'])->name('index');
+            Route::get('/{audit_trail}', [AuditTrailController::class, 'show'])->name('show');
+            Route::delete('/cleanup', [AuditTrailController::class, 'cleanup'])->name('cleanup');
+            Route::post('/export', [AuditTrailController::class, 'export'])->name('export');
         });
 
         // Portofolio
-        Route::resource('portfolios', \App\Http\Controllers\Admin\PortofolioController::class);
+        Route::resource('portfolio', PortofolioController::class);
         
-        // Additional routes for technologies, features, and images
-        Route::post('/portfolios/technologies', [\App\Http\Controllers\Admin\PortofolioController::class, 'storeTechnology']);
-        Route::put('/portfolios/technologies/{technology}', [\App\Http\Controllers\Admin\PortofolioController::class, 'updateTechnology']);
-        Route::delete('/portfolios/technologies/{technology}', [\App\Http\Controllers\Admin\PortofolioController::class, 'destroyTechnology']);
-        
-        Route::post('/portfolios/features', [\App\Http\Controllers\Admin\PortofolioController::class, 'storeFeature']);
-        Route::put('/portfolios/features/{feature}', [\App\Http\Controllers\Admin\PortofolioController::class, 'updateFeature']);
-        Route::delete('/portfolios/features/{feature}', [\App\Http\Controllers\Admin\PortofolioController::class, 'destroyFeature']);
-        
-        Route::post('/portfolios/images', [\App\Http\Controllers\Admin\PortofolioController::class, 'storeImage']);
-        Route::put('/portfolios/images/{image}', [\App\Http\Controllers\Admin\PortofolioController::class, 'updateImage']);
-        Route::delete('/portfolios/images/{image}', [\App\Http\Controllers\Admin\PortofolioController::class, 'destroyImage']);
-        
-        Route::post('/portfolios/bulk-destroy', [\App\Http\Controllers\Admin\PortofolioController::class, 'bulkDestroy']);
-        Route::post('/portfolios/bulk-update', [\App\Http\Controllers\Admin\PortofolioController::class, 'bulkUpdate']);
-
+        // Nested routes untuk Portofolio
+        Route::prefix('portfolio')->group(function () {
+            // Technologies
+            Route::post('/technologies', [PortofolioController::class, 'storeTechnology']);
+            Route::put('/technologies/{technology}', [PortofolioController::class, 'updateTechnology']);
+            Route::delete('/technologies/{technology}', [PortofolioController::class, 'destroyTechnology']);
+            
+            // Features
+            Route::post('/features', [PortofolioController::class, 'storeFeature']);
+            Route::put('/features/{feature}', [PortofolioController::class, 'updateFeature']);
+            Route::delete('/features/{feature}', [PortofolioController::class, 'destroyFeature']);
+            
+            // Images
+            Route::post('/images', [PortofolioController::class, 'storeImage']);
+            Route::put('/images/{image}', [PortofolioController::class, 'updateImage']);
+            Route::delete('/images/{image}', [PortofolioController::class, 'destroyImage']);
+            
+            // Bulk operations
+            Route::post('/bulk-destroy', [PortofolioController::class, 'bulkDestroy']);
+            Route::post('/bulk-update', [PortofolioController::class, 'bulkUpdate']);
+        });
     });
 });
+
+// Route untuk menangani semua rute yang tidak terdaftar (404/403)
+Route::fallback(function (Request $request) {
+    if (!auth()->check()) {
+        return Inertia::render('Admin/Errors/404', [
+            'auth' => ['user' => null],
+        ])->toResponse($request)->setStatusCode(404);
+    }
+
+    $user = auth()->user();
+    $authData = [
+        'user' => [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'roles' => $user->getRoleNames()->toArray(),
+            'permissions' => $user->getAllPermissions()->pluck('name')->toArray(),
+        ],
+    ];
+
+    // Cek jika user mencoba mengakses admin tanpa permission
+    if (str_starts_with($request->path(), 'admin') && !$user->hasPermissionTo('access admin panel')) {
+        return Inertia::render('Admin/Errors/403', ['auth' => $authData])
+            ->toResponse($request)
+            ->setStatusCode(403);
+    }
+
+    // Default ke 404
+    return Inertia::render('Admin/Errors/404', ['auth' => $authData])
+        ->toResponse($request)
+        ->setStatusCode(404);
+})->name('fallback');
 
 require __DIR__.'/auth.php';
