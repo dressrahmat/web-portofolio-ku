@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Artikel extends Model
 {
     use HasFactory;
 
-    // Tentukan nama tabel secara eksplisit
     protected $table = 'artikel';
-    
+
     protected $fillable = [
         'judul',
         'slug',
@@ -26,21 +26,49 @@ class Artikel extends Model
 
     protected $casts = [
         'diterbitkan_pada' => 'date',
-        'disetujui' => 'boolean',
+        'jumlah_dilihat' => 'integer',
     ];
 
-    public function kategoris()
+    /**
+     * Get the kategori associated with the artikel.
+     */
+    public function kategori(): BelongsToMany
     {
-        return $this->belongsToMany(Kategori::class, 'artikel_kategori');
+        return $this->belongsToMany(Kategori::class, 'artikel_kategori', 'artikel_id', 'kategori_id')
+            ->withTimestamps();
     }
 
-    public function komentars()
+    /**
+     * Scope untuk artikel yang sudah diterbitkan
+     */
+    public function scopePublished($query)
     {
-        return $this->hasMany(Komentar::class, 'artikel_id');
+        return $query->where('status', 'terbit')
+            ->whereNotNull('diterbitkan_pada')
+            ->where('diterbitkan_pada', '<=', now());
     }
 
-    public function komentarUtama()
+    /**
+     * Scope untuk artikel draf
+     */
+    public function scopeDraft($query)
     {
-        return $this->hasMany(Komentar::class, 'artikel_id')->whereNull('induk_id');
+        return $query->where('status', 'draf');
+    }
+
+    /**
+     * Scope untuk artikel diarsipkan
+     */
+    public function scopeArchived($query)
+    {
+        return $query->where('status', 'arsip');
+    }
+
+    /**
+     * Increment jumlah dilihat
+     */
+    public function incrementViews()
+    {
+        $this->increment('jumlah_dilihat');
     }
 }

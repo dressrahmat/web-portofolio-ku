@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('technology');
             $table->string('icon')->nullable();
             $table->timestamps();
-            
+
             $table->index('portfolio_id');
         });
     }

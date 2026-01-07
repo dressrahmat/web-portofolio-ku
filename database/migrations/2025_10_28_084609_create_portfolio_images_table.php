@@ -16,7 +16,7 @@ return new class extends Migration
             $table->boolean('is_primary')->default(false);
             $table->integer('sort_order')->default(0);
             $table->timestamps();
-            
+
             $table->index('portfolio_id');
             $table->index('is_primary');
             $table->index('sort_order');

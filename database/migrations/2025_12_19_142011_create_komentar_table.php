@@ -11,13 +11,13 @@ return new class extends Migration
         Schema::create('komentar', function (Blueprint $table) {
             $table->id();
             $table->foreignId('artikel_id')
-                  ->nullable()
-                  ->constrained('artikel')
-                  ->onDelete('cascade');
+                ->nullable()
+                ->constrained('artikel')
+                ->onDelete('cascade');
             $table->foreignId('induk_id')
-                  ->nullable()
-                  ->constrained('komentar')
-                  ->onDelete('cascade');
+                ->nullable()
+                ->constrained('komentar')
+                ->onDelete('cascade');
             $table->string('nama', 255);
             $table->string('email', 255);
             $table->text('konten')->nullable();

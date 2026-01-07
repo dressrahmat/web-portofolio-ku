@@ -100,14 +100,14 @@ class KategoriController extends Controller
             return redirect()->route('admin.kategori.index')
                 ->with('success', 'Kategori berhasil dibuat.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Gagal membuat kategori: ' . $e->getMessage());
+            return back()->with('error', 'Gagal membuat kategori: '.$e->getMessage());
         }
     }
 
     public function show(Kategori $kategori)
     {
         $authUser = auth()->user();
-        
+
         // Load relasi artikel jika diperlukan
         $kategori->load('artikels');
 
@@ -146,7 +146,7 @@ class KategoriController extends Controller
     public function update(Request $request, Kategori $kategori)
     {
         $request->validate([
-            'nama' => 'required|string|max:255|unique:kategori,nama,' . $kategori->id,
+            'nama' => 'required|string|max:255|unique:kategori,nama,'.$kategori->id,
             'deskripsi' => 'nullable|string',
         ]);
 
@@ -160,7 +160,7 @@ class KategoriController extends Controller
             return redirect()->route('admin.kategori.index')
                 ->with('success', 'Kategori berhasil diperbarui.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Gagal memperbarui kategori: ' . $e->getMessage());
+            return back()->with('error', 'Gagal memperbarui kategori: '.$e->getMessage());
         }
     }
 
@@ -177,7 +177,7 @@ class KategoriController extends Controller
             return redirect()->route('admin.kategori.index')
                 ->with('success', 'Kategori berhasil dihapus.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Gagal menghapus kategori: ' . $e->getMessage());
+            return back()->with('error', 'Gagal menghapus kategori: '.$e->getMessage());
         }
     }
 
@@ -206,7 +206,7 @@ class KategoriController extends Controller
             return redirect()->route('admin.kategori.index')
                 ->with('success', 'Kategori yang dipilih berhasil dihapus.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Gagal menghapus kategori: ' . $e->getMessage());
+            return back()->with('error', 'Gagal menghapus kategori: '.$e->getMessage());
         }
     }
 
@@ -248,7 +248,7 @@ class KategoriController extends Controller
             if ($request->field === 'nama') {
                 // Untuk update nama, kita perlu juga update slug
                 $kategories = Kategori::whereIn('id', $request->ids)->get();
-                
+
                 foreach ($kategories as $kategori) {
                     $kategori->update([
                         'nama' => $request->value,
@@ -263,7 +263,7 @@ class KategoriController extends Controller
             return redirect()->route('admin.kategori.index')
                 ->with('success', 'Kategori yang dipilih berhasil diperbarui.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Gagal memperbarui kategori: ' . $e->getMessage());
+            return back()->with('error', 'Gagal memperbarui kategori: '.$e->getMessage());
         }
     }
 }

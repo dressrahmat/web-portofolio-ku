@@ -1,4 +1,5 @@
 <?php
+
 // app/Models/Portfolio.php
 
 namespace App\Models;
@@ -92,9 +93,9 @@ class Portfolio extends Model
     public function getFeaturedImageUrlAttribute()
     {
         if ($this->featured_image) {
-            return asset('storage/' . $this->featured_image);
+            return asset('storage/'.$this->featured_image);
         }
-        
+
         return asset('images/portfolio-placeholder.jpg');
     }
 

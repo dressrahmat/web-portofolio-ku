@@ -24,7 +24,7 @@ return new class extends Migration
             $table->enum('status', ['draft', 'published', 'archived'])->default('draft');
             $table->integer('sort_order')->default(0);
             $table->timestamps();
-            
+
             $table->index('category');
             $table->index('highlight');
             $table->index('status');

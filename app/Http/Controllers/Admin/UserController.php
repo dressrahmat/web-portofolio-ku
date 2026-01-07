@@ -168,7 +168,7 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
             'password' => 'nullable|string|min:8|confirmed',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'remove_photo' => 'nullable|boolean',
@@ -184,7 +184,7 @@ class UserController extends Controller
             ];
 
             // Tambahkan password jika diisi
-            if (!empty($validated['password'])) {
+            if (! empty($validated['password'])) {
                 $data['password'] = Hash::make($validated['password']);
             }
 
@@ -216,7 +216,8 @@ class UserController extends Controller
 
         } catch (\Exception $e) {
             \Log::error('Gagal update user:', ['error' => $e->getMessage()]);
-            return back()->with('error', 'Failed to update user: ' . $e->getMessage());
+
+            return back()->with('error', 'Failed to update user: '.$e->getMessage());
         }
     }
 

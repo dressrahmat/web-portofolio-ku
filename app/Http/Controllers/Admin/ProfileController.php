@@ -24,6 +24,7 @@ class ProfileController extends Controller
 
         // Pastikan untuk load roles dan permissions
         $user->load('roles', 'permissions');
+
         return Inertia::render('Admin/Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),

@@ -54,6 +54,18 @@ class RolePermissionSeeder extends Seeder
             'create kategori',
             'edit kategori',
             'delete kategori',
+
+            // Permissions for artikel
+            'view artikel',
+            'create artikel',
+            'edit artikel',
+            'delete artikel',
+
+            // Permissions for artikel kategori
+            'view artikel kategori',
+            'create artikel kategori',
+            'edit artikel kategori',
+            'delete artikel kategori',
         ];
 
         foreach ($permissions as $permission) {

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Front;
 
-use Inertia\Inertia;
-use App\Models\Setting;
-use App\Models\Portfolio;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Route;
+use App\Models\Portfolio;
+use App\Models\Setting;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 class BerandaController extends Controller
 {

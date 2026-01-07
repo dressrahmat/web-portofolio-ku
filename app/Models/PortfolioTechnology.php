@@ -1,4 +1,5 @@
 <?php
+
 // app/Models/PortfolioTechnology.php
 
 namespace App\Models;

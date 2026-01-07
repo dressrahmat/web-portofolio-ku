@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Portfolio;
-use App\Models\PortfolioTechnology;
 use App\Models\PortfolioFeature;
 use App\Models\PortfolioImage;
+use App\Models\PortfolioTechnology;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -17,7 +17,7 @@ class PortofolioController extends Controller
     public function index(Request $request)
     {
         $authUser = auth()->user();
-        
+
         // Ambil parameter dari request
         $search = $request->query('search');
         $category = $request->query('category');
@@ -30,18 +30,18 @@ class PortofolioController extends Controller
 
         // Validasi per_page
         $validPerPage = [5, 10, 15, 20];
-        if (!in_array($perPage, $validPerPage)) {
+        if (! in_array($perPage, $validPerPage)) {
             $perPage = 10;
         }
 
         // Validasi direction
-        if (!in_array($direction, ['asc', 'desc'])) {
+        if (! in_array($direction, ['asc', 'desc'])) {
             $direction = 'desc';
         }
 
         // Validasi sort column
         $validSortColumns = ['title', 'category', 'status', 'created_at', 'sort_order'];
-        if (!in_array($sort, $validSortColumns)) {
+        if (! in_array($sort, $validSortColumns)) {
             $sort = 'created_at';
         }
 
@@ -50,8 +50,8 @@ class PortofolioController extends Controller
             ->when($search, function ($query, $search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('title', 'like', "%{$search}%")
-                      ->orWhere('description', 'like', "%{$search}%")
-                      ->orWhere('client_name', 'like', "%{$search}%");
+                        ->orWhere('description', 'like', "%{$search}%")
+                        ->orWhere('client_name', 'like', "%{$search}%");
                 });
             })
             ->when($category, function ($query, $category) {
@@ -132,7 +132,7 @@ class PortofolioController extends Controller
         return Inertia::render('Admin/Portfolios/Create', [
             'categories' => [
                 'Fullstack Development',
-                'Frontend Development', 
+                'Frontend Development',
                 'Backend Development',
                 'Mobile Development',
                 'Web Development',
@@ -178,9 +178,9 @@ class PortofolioController extends Controller
         try {
             // Create portfolio
             $portfolioData = $request->only([
-                'title', 'description', 'short_description', 'category', 
+                'title', 'description', 'short_description', 'category',
                 'client_name', 'project_date', 'project_url', 'github_url',
-                'highlight', 'status', 'sort_order'
+                'highlight', 'status', 'sort_order',
             ]);
 
             // Generate slug
@@ -197,10 +197,10 @@ class PortofolioController extends Controller
             // Create technologies
             if ($request->has('technologies')) {
                 foreach ($request->technologies as $technology) {
-                    if (!empty(trim($technology))) {
+                    if (! empty(trim($technology))) {
                         PortfolioTechnology::create([
                             'portfolio_id' => $portfolio->id,
-                            'technology' => trim($technology)
+                            'technology' => trim($technology),
                         ]);
                     }
                 }
@@ -209,10 +209,10 @@ class PortofolioController extends Controller
             // Create features
             if ($request->has('features')) {
                 foreach ($request->features as $feature) {
-                    if (!empty(trim($feature))) {
+                    if (! empty(trim($feature))) {
                         PortfolioFeature::create([
                             'portfolio_id' => $portfolio->id,
-                            'feature' => trim($feature)
+                            'feature' => trim($feature),
                         ]);
                     }
                 }
@@ -224,13 +224,13 @@ class PortofolioController extends Controller
                     // Hanya proses jika ada file (image baru)
                     if (isset($imageData['file']) && $imageData['file'] instanceof \Illuminate\Http\UploadedFile) {
                         $path = $imageData['file']->store('portfolio/images', 'public');
-                        
+
                         PortfolioImage::create([
                             'portfolio_id' => $portfolio->id,
                             'image_path' => $path,
                             'caption' => $imageData['caption'] ?? null,
                             'is_primary' => $imageData['is_primary'] ?? false,
-                            'sort_order' => $imageData['sort_order'] ?? 0
+                            'sort_order' => $imageData['sort_order'] ?? 0,
                         ]);
                     }
                     // Jika tidak ada file tapi ada ID (image existing dari template), skip
@@ -243,7 +243,8 @@ class PortofolioController extends Controller
 
         } catch (\Exception $e) {
             \Log::error('Failed to create portfolio:', ['error' => $e->getMessage()]);
-            return back()->with('error', 'Failed to create portfolio: ' . $e->getMessage());
+
+            return back()->with('error', 'Failed to create portfolio: '.$e->getMessage());
         }
     }
 
@@ -276,7 +277,7 @@ class PortofolioController extends Controller
             'categories' => [
                 'Fullstack Development',
                 'Frontend Development',
-                'Backend Development', 
+                'Backend Development',
                 'Mobile Development',
                 'Web Development',
             ],
@@ -325,8 +326,8 @@ class PortofolioController extends Controller
         try {
             $portfolioData = $request->only([
                 'title', 'description', 'short_description', 'category',
-                'client_name', 'project_date', 'project_url', 'github_url', 
-                'highlight', 'status', 'sort_order'
+                'client_name', 'project_date', 'project_url', 'github_url',
+                'highlight', 'status', 'sort_order',
             ]);
 
             // Update slug jika title berubah
@@ -354,10 +355,10 @@ class PortofolioController extends Controller
             if ($request->has('technologies')) {
                 $portfolio->technologies()->delete();
                 foreach ($request->technologies as $technology) {
-                    if (!empty(trim($technology))) {
+                    if (! empty(trim($technology))) {
                         PortfolioTechnology::create([
                             'portfolio_id' => $portfolio->id,
-                            'technology' => trim($technology)
+                            'technology' => trim($technology),
                         ]);
                     }
                 }
@@ -367,10 +368,10 @@ class PortofolioController extends Controller
             if ($request->has('features')) {
                 $portfolio->features()->delete();
                 foreach ($request->features as $feature) {
-                    if (!empty(trim($feature))) {
+                    if (! empty(trim($feature))) {
                         PortfolioFeature::create([
                             'portfolio_id' => $portfolio->id,
-                            'feature' => trim($feature)
+                            'feature' => trim($feature),
                         ]);
                     }
                 }
@@ -391,15 +392,15 @@ class PortofolioController extends Controller
                     // Jika ada file baru (image baru)
                     if (isset($imageData['file']) && $imageData['file'] instanceof \Illuminate\Http\UploadedFile) {
                         $path = $imageData['file']->store('portfolio/images', 'public');
-                        
+
                         PortfolioImage::create([
                             'portfolio_id' => $portfolio->id,
                             'image_path' => $path,
                             'caption' => $imageData['caption'] ?? null,
                             'is_primary' => $imageData['is_primary'] ?? false,
-                            'sort_order' => $imageData['sort_order'] ?? 0
+                            'sort_order' => $imageData['sort_order'] ?? 0,
                         ]);
-                    } 
+                    }
                     // Jika hanya update data (caption, is_primary, sort_order)
                     elseif (isset($imageData['id'])) {
                         $image = PortfolioImage::find($imageData['id']);
@@ -410,11 +411,11 @@ class PortofolioController extends Controller
                                     ->where('id', '!=', $imageData['id'])
                                     ->update(['is_primary' => false]);
                             }
-                            
+
                             $image->update([
                                 'caption' => $imageData['caption'] ?? null,
                                 'is_primary' => $imageData['is_primary'] ?? false,
-                                'sort_order' => $imageData['sort_order'] ?? 0
+                                'sort_order' => $imageData['sort_order'] ?? 0,
                             ]);
                         }
                     }
@@ -426,7 +427,8 @@ class PortofolioController extends Controller
 
         } catch (\Exception $e) {
             \Log::error('Failed to update portfolio:', ['error' => $e->getMessage()]);
-            return back()->with('error', 'Failed to update portfolio: ' . $e->getMessage());
+
+            return back()->with('error', 'Failed to update portfolio: '.$e->getMessage());
         }
     }
 
@@ -450,7 +452,8 @@ class PortofolioController extends Controller
 
         } catch (\Exception $e) {
             \Log::error('Failed to delete portfolio:', ['error' => $e->getMessage()]);
-            return back()->with('error', 'Failed to delete portfolio: ' . $e->getMessage());
+
+            return back()->with('error', 'Failed to delete portfolio: '.$e->getMessage());
         }
     }
 

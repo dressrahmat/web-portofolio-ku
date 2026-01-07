@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Komentar extends Model
 {
@@ -11,7 +11,7 @@ class Komentar extends Model
 
     // Tentukan nama tabel secara eksplisit
     protected $table = 'komentar';
-    
+
     protected $fillable = [
         'artikel_id',
         'induk_id',

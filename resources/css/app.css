@@ -1,3 +1,58 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Quill Editor Custom Styles */
+/* Quill Editor Custom Styles */
+.quill-editor .ql-container {
+    border: none !important;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.quill-editor .ql-toolbar {
+    border: none !important;
+    border-bottom: 1px solid #e5e7eb !important;
+    background-color: #f9fafb;
+}
+
+.quill-editor .ql-editor {
+    min-height: 300px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.quill-editor .ql-editor.ql-blank::before {
+    color: #9ca3af;
+    font-style: normal;
+    left: 15px;
+}
+
+/* Dark mode styles */
+.dark .quill-editor .ql-toolbar {
+    background-color: #374151;
+    border-bottom-color: #4b5563 !important;
+}
+
+.dark .quill-editor .ql-snow .ql-stroke {
+    stroke: #d1d5db;
+}
+
+.dark .quill-editor .ql-snow .ql-fill {
+    fill: #d1d5db;
+}
+
+.dark .quill-editor .ql-snow .ql-picker {
+    color: #d1d5db;
+}
+
+.dark .quill-editor .ql-snow .ql-picker-options {
+    background-color: #374151;
+    border-color: #4b5563;
+}
+
+/* Custom height for editor */
+.quill-editor .ql-container.ql-snow {
+    height: calc(100% - 42px);
+}

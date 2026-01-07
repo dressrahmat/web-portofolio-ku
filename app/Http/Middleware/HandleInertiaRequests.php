@@ -20,12 +20,12 @@ class HandleInertiaRequests extends Middleware
      */
     private function getSafeUserData($user): ?array
     {
-        if (!$user) {
+        if (! $user) {
             return null;
         }
 
         // Load relationships if not already loaded
-        if (!$user->relationLoaded('roles')) {
+        if (! $user->relationLoaded('roles')) {
             $user->load('roles');
         }
 
@@ -36,43 +36,43 @@ class HandleInertiaRequests extends Middleware
             'avatar' => $user->avatar_url ?? null,
             'timezone' => $user->timezone ?? config('app.timezone'),
             'locale' => $user->locale ?? config('app.locale'),
-            
+
             // Role information (hanya data yang diperlukan)
             'role' => [
                 'name' => $user->roles->first()->name ?? 'user',
                 'display_name' => $user->roles->first()->display_name ?? 'User',
             ],
-            
+
             // Hanya permissions yang diperlukan untuk UI components
             'permissions' => [
                 // Dashboard & Admin
                 'can_access_dashboard' => $user->can('view dashboard'),
                 'can_access_admin' => $user->can('access admin panel'),
-                
+
                 // Users
                 'can_view_users' => $user->can('view users'),
                 'can_create_users' => $user->can('create users'),
                 'can_edit_users' => $user->can('edit users'),
                 'can_delete_users' => $user->can('delete users'),
-                
+
                 // Roles
                 'can_view_roles' => $user->can('view roles'),
                 'can_create_roles' => $user->can('create roles'),
                 'can_edit_roles' => $user->can('edit roles'),
                 'can_delete_roles' => $user->can('delete roles'),
-                
+
                 // Permissions
                 'can_view_permissions' => $user->can('view permissions'),
                 'can_edit_permissions' => $user->can('edit permissions'),
-                
+
                 // Settings
                 'can_view_settings' => $user->can('view settings'),
                 'can_edit_settings' => $user->can('edit settings'),
-                
+
                 // Audit Trail
                 'can_view_audit_trail' => $user->can('view audit trail'),
             ],
-            
+
             // Metadata
             'email_verified_at' => $user->email_verified_at?->toISOString(),
             'created_at' => $user->created_at?->toISOString(),
@@ -90,15 +90,15 @@ class HandleInertiaRequests extends Middleware
             // Basic site info
             'site_name' => $settings->site_name ?? config('app.name', 'Laravel'),
             'site_description' => $settings->site_description ?? '',
-            'site_logo' => $settings->site_logo ? asset('storage/' . $settings->site_logo) : null,
-            'site_favicon' => $settings->site_favicon ? asset('storage/' . $settings->site_favicon) : null,
+            'site_logo' => $settings->site_logo ? asset('storage/'.$settings->site_logo) : null,
+            'site_favicon' => $settings->site_favicon ? asset('storage/'.$settings->site_favicon) : null,
             'site_url' => config('app.url'),
-            
+
             // Contact information
             'contact_email' => $settings->contact_email ?? null,
             'contact_phone' => $settings->contact_phone ?? null,
             'address' => $settings->address ?? null,
-            
+
             // Social media links
             'social_links' => [
                 'facebook' => $settings->facebook_url,
@@ -107,16 +107,16 @@ class HandleInertiaRequests extends Middleware
                 'youtube' => $settings->youtube_url,
                 'linkedin' => $settings->linkedin_url,
             ],
-            
+
             // SEO settings
             'meta_keywords' => $settings->meta_keywords ?? '',
             'meta_author' => $settings->meta_author ?? '',
-            'og_image' => $settings->og_image ? asset('storage/' . $settings->og_image) : null,
-            
+            'og_image' => $settings->og_image ? asset('storage/'.$settings->og_image) : null,
+
             // Maintenance mode
             'maintenance_mode' => (bool) $settings->maintenance_mode,
             'maintenance_message' => $settings->maintenance_message ?? 'Site is under maintenance',
-            
+
             // Tracking (hanya status enabled/disabled, tanpa ID atau sensitive data)
             'tracking' => [
                 'google_analytics' => [
@@ -145,12 +145,12 @@ class HandleInertiaRequests extends Middleware
         return [
             'site_name' => $settings->site_name ?? config('app.name', 'Laravel'),
             'site_description' => $settings->site_description,
-            'site_logo' => $settings->site_logo ? asset('storage/' . $settings->site_logo) : null,
-            'site_favicon' => $settings->site_favicon ? asset('storage/' . $settings->site_favicon) : null,
+            'site_logo' => $settings->site_logo ? asset('storage/'.$settings->site_logo) : null,
+            'site_favicon' => $settings->site_favicon ? asset('storage/'.$settings->site_favicon) : null,
             'contact_email' => $settings->contact_email,
             'contact_phone' => $settings->contact_phone,
             'address' => $settings->address,
-            
+
             // Social media untuk blade
             'social_links' => [
                 'facebook' => $settings->facebook_url,
@@ -159,16 +159,16 @@ class HandleInertiaRequests extends Middleware
                 'youtube' => $settings->youtube_url,
                 'linkedin' => $settings->linkedin_url,
             ],
-            
+
             // SEO untuk blade
             'meta_keywords' => $settings->meta_keywords,
             'meta_author' => $settings->meta_author,
-            'og_image' => $settings->og_image ? asset('storage/' . $settings->og_image) : null,
-            
+            'og_image' => $settings->og_image ? asset('storage/'.$settings->og_image) : null,
+
             // Maintenance mode
             'maintenance_mode' => (bool) $settings->maintenance_mode,
             'maintenance_message' => $settings->maintenance_message,
-            
+
             // Tracking dengan ID hanya untuk blade (tidak diekspos ke frontend JS)
             'tracking' => [
                 'google_analytics' => [
@@ -189,7 +189,7 @@ class HandleInertiaRequests extends Middleware
                     'enabled' => $settings->isGoogleAdsenseEnabled(),
                 ],
             ],
-            
+
             // Scripts hanya untuk blade
             'header_scripts' => $this->sanitizeScripts($settings->header_scripts),
             'body_scripts' => $this->sanitizeScripts($settings->body_scripts),
@@ -202,7 +202,7 @@ class HandleInertiaRequests extends Middleware
      */
     private function sanitizeScripts(?string $scripts): ?string
     {
-        if (!$scripts) {
+        if (! $scripts) {
             return null;
         }
 
@@ -212,10 +212,10 @@ class HandleInertiaRequests extends Middleware
         ];
 
         $scripts = preg_replace($allowedPatterns, '', $scripts);
-        
+
         // Remove any potentially dangerous tags except script, noscript, style
         $scripts = strip_tags($scripts, '<script><noscript><style>');
-        
+
         return trim($scripts) ?: null;
     }
 
@@ -249,7 +249,7 @@ class HandleInertiaRequests extends Middleware
      */
     private function sanitizeFlashMessage($message): ?string
     {
-        if (!$message) {
+        if (! $message) {
             return null;
         }
 
@@ -284,7 +284,7 @@ class HandleInertiaRequests extends Middleware
         ];
 
         $currentRoute = $request->route();
-        
+
         // Cek berdasarkan route name
         if ($currentRoute && in_array($currentRoute->getName(), $excludedRoutes)) {
             return true;
@@ -308,7 +308,7 @@ class HandleInertiaRequests extends Middleware
     {
         $sharedData = [
             ...parent::share($request),
-            
+
             // Authentication data (filtered - TIDAK termasuk semua permissions)
             'auth' => [
                 'user' => $this->getSafeUserData($request->user()),
@@ -316,16 +316,16 @@ class HandleInertiaRequests extends Middleware
                 'is_admin' => $request->user() ? $request->user()->hasRole('admin') : false,
                 'is_master' => $request->user() ? $request->user()->hasRole('master') : false,
             ],
-            
+
             // Settings (filtered - tanpa data sensitif)
             'settings' => $this->getSettings(),
-            
+
             // Flash messages
             'flash' => $this->getFlashMessages($request),
-            
+
             // Route information untuk Ziggy
             'ziggy' => $this->getZiggyData($request),
-            
+
             // Application info
             'app' => [
                 'name' => config('app.name'),
@@ -336,7 +336,7 @@ class HandleInertiaRequests extends Middleware
                 'locale' => config('app.locale'),
                 'version' => $this->version($request),
             ],
-            
+
             // CSRF token
             'csrf_token' => csrf_token(),
         ];
@@ -359,19 +359,19 @@ class HandleInertiaRequests extends Middleware
 
         // Check maintenance mode - skip untuk route yang dikecualikan
         $settings = Setting::getSettings();
-        
-        if ($settings->isMaintenanceModeEnabled() && 
-            !$this->isExcludedFromMaintenance($request) && 
-            !$request->user()?->can('access admin panel')) {
-            
+
+        if ($settings->isMaintenanceModeEnabled() &&
+            ! $this->isExcludedFromMaintenance($request) &&
+            ! $request->user()?->can('access admin panel')) {
+
             if ($request->inertia()) {
                 return inertia('Front/Maintenance', [
-                    'message' => $settings->maintenance_message
+                    'message' => $settings->maintenance_message,
                 ]);
             }
-            
+
             return response()->view('Front.Maintenance', [
-                'message' => $settings->maintenance_message
+                'message' => $settings->maintenance_message,
             ], 503);
         }
 

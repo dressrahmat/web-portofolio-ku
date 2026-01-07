@@ -11,13 +11,13 @@ return new class extends Migration
         Schema::create('artikel_kategori', function (Blueprint $table) {
             $table->id();
             $table->foreignId('kategori_id')
-                  ->nullable()
-                  ->constrained('kategori')
-                  ->onDelete('cascade');
+                ->nullable()
+                ->constrained('kategori')
+                ->onDelete('cascade');
             $table->foreignId('artikel_id')
-                  ->nullable()
-                  ->constrained('artikel')
-                  ->onDelete('cascade');
+                ->nullable()
+                ->constrained('artikel')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

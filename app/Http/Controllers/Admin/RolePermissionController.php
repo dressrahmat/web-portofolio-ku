@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
@@ -77,7 +76,7 @@ class RolePermissionController extends Controller
     public function createRole()
     {
         $authUser = auth()->user();
-        
+
         // Mengambil semua permissions dari database
         $permissions = Permission::all()
             ->groupBy(function ($permission) {

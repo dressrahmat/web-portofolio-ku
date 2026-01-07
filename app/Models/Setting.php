@@ -67,7 +67,7 @@ class Setting extends Model
     public static function getSettings()
     {
         return cache()->remember('app_settings', 3600, function () {
-            return self::first() ?? new self();
+            return self::first() ?? new self;
         });
     }
 
@@ -76,22 +76,22 @@ class Setting extends Model
      */
     public function isGoogleAnalyticsEnabled(): bool
     {
-        return $this->google_analytics_enabled && !empty($this->google_analytics_id);
+        return $this->google_analytics_enabled && ! empty($this->google_analytics_id);
     }
 
     public function isGoogleTagManagerEnabled(): bool
     {
-        return $this->google_tag_manager_enabled && !empty($this->google_tag_manager_id);
+        return $this->google_tag_manager_enabled && ! empty($this->google_tag_manager_id);
     }
 
     public function isFacebookPixelEnabled(): bool
     {
-        return $this->facebook_pixel_enabled && !empty($this->facebook_pixel_id);
+        return $this->facebook_pixel_enabled && ! empty($this->facebook_pixel_id);
     }
 
     public function isGoogleAdsenseEnabled(): bool
     {
-        return $this->google_adsense_enabled && !empty($this->google_adsense_id);
+        return $this->google_adsense_enabled && ! empty($this->google_adsense_id);
     }
 
     /**

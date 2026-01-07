@@ -1,4 +1,5 @@
 <?php
+
 // app/Models/PortfolioImage.php
 
 namespace App\Models;
@@ -32,7 +33,7 @@ class PortfolioImage extends Model
     // Accessors
     public function getImageUrlAttribute()
     {
-        return asset('storage/' . $this->image_path);
+        return asset('storage/'.$this->image_path);
     }
 
     // Scopes

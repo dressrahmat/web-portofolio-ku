@@ -12,7 +12,8 @@ return new class extends Migration
             $table->id();
             $table->string('judul', 255);
             $table->string('slug', 255)->unique();
-            $table->text('konten')->nullable();            $table->string('gambar_utama', 255);
+            $table->text('konten')->nullable();
+            $table->string('gambar_utama', 255);
             $table->enum('status', ['draf', 'terbit', 'arsip'])->default('draf');
             $table->date('diterbitkan_pada')->nullable();
             $table->integer('jumlah_dilihat')->default(0);

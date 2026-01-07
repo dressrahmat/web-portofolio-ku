@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('feature');
             $table->text('description')->nullable();
             $table->timestamps();
-            
+
             $table->index('portfolio_id');
         });
     }
