@@ -47,6 +47,8 @@ export default function EditPortfolio({ portfolio, categories }) {
         short_description: portfolio.short_description || "",
         category: portfolio.category || "",
         client_name: portfolio.client_name || "",
+        role: portfolio.role || "",
+        results: portfolio.results || "",
         project_date: portfolio.project_date || "",
         project_url: portfolio.project_url || "",
         github_url: portfolio.github_url || "",
@@ -337,6 +339,33 @@ export default function EditPortfolio({ portfolio, categories }) {
                                         placeholder="Enter client name (optional)"
                                     />
                                     <InputError message={errors.client_name} />
+                                </div>
+
+                                {/* Peran */}
+                                <div>
+                                    <InputLabel htmlFor="role" value="Peran Saya" />
+                                    <TextInput
+                                        id="role"
+                                        type="text"
+                                        value={data.role}
+                                        onChange={(e) => setData("role", e.target.value)}
+                                        error={errors.role}
+                                        placeholder="mis. Fullstack Developer"
+                                    />
+                                    <InputError message={errors.role} />
+                                </div>
+
+                                {/* Hasil */}
+                                <div className="md:col-span-2">
+                                    <InputLabel htmlFor="results" value="Hasil yang Dicapai (satu per baris)" />
+                                    <TextArea
+                                        id="results"
+                                        rows={3}
+                                        value={data.results}
+                                        onChange={(e) => setData("results", e.target.value)}
+                                        placeholder={"Proses laporan dari 3 hari menjadi 10 menit\nDipakai oleh 200+ jamaah"}
+                                    />
+                                    <InputError message={errors.results} />
                                 </div>
 
                                 {/* Project Date */}

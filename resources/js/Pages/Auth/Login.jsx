@@ -169,15 +169,12 @@ export default function Login({ status, canResetPassword }) {
                     variants={itemVariants}
                     className="text-center pt-4 border-t border-neutral-100 dark:border-neutral-700 mt-6"
                 >
-                    <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                        Don't have an account?{" "}
-                        <Link
-                            href={route("register")}
-                            className="font-medium text-primary-600 dark:text-primary-400 hover:text-primary-500 dark:hover:text-primary-300 transition-colors duration-200"
-                        >
-                            Sign up
-                        </Link>
-                    </p>
+                    <Link
+                        href={route("welcome")}
+                        className="text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-500 transition-colors duration-200"
+                    >
+                        ← Kembali ke website
+                    </Link>
                 </motion.div>
             </motion.div>
         </GuestLayout>

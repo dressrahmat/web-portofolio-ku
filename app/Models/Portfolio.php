@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Support\Media;
 use Illuminate\Support\Str;
 
 class Portfolio extends Model
@@ -20,6 +21,8 @@ class Portfolio extends Model
         'short_description',
         'category',
         'client_name',
+        'role',
+        'results',
         'project_date',
         'project_url',
         'github_url',
@@ -35,21 +38,33 @@ class Portfolio extends Model
         'sort_order' => 'integer',
     ];
 
+    protected $appends = ['featured_image_url', 'results_list'];
+
     protected static function boot()
     {
         parent::boot();
 
         static::creating(function ($portfolio) {
             if (empty($portfolio->slug)) {
-                $portfolio->slug = Str::slug($portfolio->title);
+                $portfolio->slug = static::uniqueSlug($portfolio->title);
             }
         });
+    }
 
-        static::updating(function ($portfolio) {
-            if ($portfolio->isDirty('title') && empty($portfolio->slug)) {
-                $portfolio->slug = Str::slug($portfolio->title);
-            }
-        });
+    /**
+     * Buat slug unik (menambahkan -2, -3, ... bila sudah dipakai).
+     */
+    public static function uniqueSlug(string $title, ?int $ignoreId = null): string
+    {
+        $base = Str::slug($title) ?: 'portofolio';
+        $slug = $base;
+        $i = 2;
+
+        while (static::where('slug', $slug)->when($ignoreId, fn ($q) => $q->where('id', '!=', $ignoreId))->exists()) {
+            $slug = $base.'-'.$i++;
+        }
+
+        return $slug;
     }
 
     // Relationships
@@ -93,10 +108,26 @@ class Portfolio extends Model
     public function getFeaturedImageUrlAttribute()
     {
         if ($this->featured_image) {
-            return asset('storage/'.$this->featured_image);
+            return Media::url($this->featured_image);
         }
 
-        return asset('images/portfolio-placeholder.jpg');
+        // Fallback ke gambar galeri pertama (primary lebih dulu)
+        if ($this->relationLoaded('images') && $this->images->isNotEmpty()) {
+            $img = $this->images->firstWhere('is_primary', true) ?? $this->images->first();
+
+            return $img->image_url;
+        }
+
+        return null;
+    }
+
+    public function getResultsListAttribute(): array
+    {
+        return collect(preg_split('/\r\n|\r|\n/', (string) $this->results))
+            ->map(fn ($line) => trim(ltrim(trim($line), '-•*')))
+            ->filter()
+            ->values()
+            ->all();
     }
 
     public function getProjectDateFormattedAttribute()

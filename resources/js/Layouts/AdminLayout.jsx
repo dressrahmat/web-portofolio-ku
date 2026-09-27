@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Head, usePage } from "@inertiajs/react";
 import MenuSideBarAdmin from "@/Components/MenuSideBarAdmin";
 import MenuHeaderAdmin from "@/Components/MenuHeaderAdmin";
+import {
+    FiHome, FiUser, FiBriefcase, FiBookOpen, FiZap, FiAward, FiLayers,
+    FiMessageCircle, FiFolder, FiFileText, FiTag, FiInbox, FiSettings,
+    FiUsers, FiShield, FiActivity,
+} from "react-icons/fi";
 
 export default function AdminLayout({ children, title }) {
     const { auth, settings } = usePage().props;
@@ -43,243 +48,45 @@ export default function AdminLayout({ children, title }) {
         return roles.some((role) => auth.user.roles.includes(role));
     };
 
-    // Array menu items - DIPERBAHARUI
+    // Menu sidebar. `permission` bisa string atau array (cukup salah satu).
+    // Item dengan `section` dipakai sebagai judul kelompok.
+    const { unreadMessages = 0 } = usePage().props;
+    const icon = (Icon) => <Icon className="w-5 h-5" />;
+
     const menuItems = [
-        {
-            id: "dashboard",
-            label: "Dashboard",
-            route: route("dashboard"),
-            permission: "view dashboard",
-            roles: ["admin", "superadmin"],
-            anyPermission: false,
-            anyRole: true,
-            activeRoutes: ["dashboard"],
-            icon: (
-                <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                    />
-                </svg>
-            ),
-        },
-        {
-            id: "users",
-            label: "Users",
-            route: route("admin.users.index"),
-            permission: "view users",
-            roles: [],
-            anyPermission: false,
-            anyRole: false,
-            activeRoutes: [
-                "admin.users.index",
-                "admin.users.create",
-                "admin.users.edit",
-            ],
-            icon: (
-                <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5 0c-.281.022-.562.043-.843.064M12 14a6 6 0 006-6c0-3.314-2.686-6-6-6S6 4.686 6 8a6 6 0 006 6z"
-                    />
-                </svg>
-            ),
-        },
-        {
-            id: "role-permissions",
-            label: "Role & Permissions",
-            route: route("admin.role-permissions.index"),
-            permission: "",
-            roles: [],
-            anyPermission: true,
-            permissions: ["view roles", "view permissions"],
-            anyRole: false,
-            activeRoutes: [
-                "admin.role-permissions.index",
-                "admin.roles.create",
-                "admin.roles.edit",
-                "admin.permissions.create",
-                "admin.permissions.edit",
-            ],
-            icon: (
-                <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                    />
-                </svg>
-            ),
-        },
-        {
-            id: "audit-trail",
-            label: "Audit Trail",
-            route: route("admin.audit-trail.index"),
-            permission: "view audit trail",
-            roles: [],
-            anyPermission: false,
-            anyRole: false,
-            activeRoutes: ["admin.audit-trail.*"],
-            icon: (
-                <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                    />
-                </svg>
-            ),
-        },
-        {
-            id: "settings",
-            label: "Settings",
-            route: route("admin.settings.index"),
-            permission: "view settings",
-            roles: ["admin", "superadmin"],
-            anyPermission: false,
-            anyRole: false,
-            activeRoutes: ["admin.settings.*"],
-            icon: (
-                <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                    />
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                </svg>
-            ),
-        },
-        {
-            id: "kategori",
-            label: "Kategori",
-            route: route("admin.kategori.index"),
-            permission: "view kategori",
-            roles: ["admin", "superadmin"],
-            anyPermission: false,
-            anyRole: false,
-            activeRoutes: ["admin.settings.*"],
-            icon: (
-                <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                    />
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                </svg>
-            ),
-        },
-        {
-            id: "artikel",
-            label: "Artikel",
-            route: route("admin.artikel.index"),
-            permission: "view artikel",
-            roles: ["admin", "superadmin"],
-            anyPermission: false,
-            anyRole: false,
-            activeRoutes: ["admin.settings.*"],
-            icon: (
-                <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                    />
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                </svg>
-            ),
-        },
+        { id: "dashboard", label: "Dashboard", route: route("dashboard"), permission: "view dashboard", activeRoutes: ["dashboard"], icon: icon(FiHome) },
+
+        { id: "sec-cv", section: "Konten CV", permission: "manage cv" },
+        { id: "cv-profile", label: "Profil & Kontak", route: route("admin.cv.profile.edit"), permission: "manage cv", activeRoutes: ["admin.cv.profile.*"], icon: icon(FiUser) },
+        { id: "cv-experiences", label: "Pengalaman", route: route("admin.cv.experiences.index"), permission: "manage cv", activeRoutes: ["admin.cv.experiences.*"], icon: icon(FiBriefcase) },
+        { id: "cv-educations", label: "Pendidikan", route: route("admin.cv.educations.index"), permission: "manage cv", activeRoutes: ["admin.cv.educations.*"], icon: icon(FiBookOpen) },
+        { id: "cv-skills", label: "Keahlian", route: route("admin.cv.skills.index"), permission: "manage cv", activeRoutes: ["admin.cv.skills.*"], icon: icon(FiZap) },
+        { id: "cv-achievements", label: "Sertifikat & Penghargaan", route: route("admin.cv.achievements.index"), permission: "manage cv", activeRoutes: ["admin.cv.achievements.*"], icon: icon(FiAward) },
+        { id: "cv-services", label: "Layanan", route: route("admin.cv.services.index"), permission: "manage cv", activeRoutes: ["admin.cv.services.*"], icon: icon(FiLayers) },
+        { id: "cv-testimonials", label: "Testimoni", route: route("admin.cv.testimonials.index"), permission: "manage cv", activeRoutes: ["admin.cv.testimonials.*"], icon: icon(FiMessageCircle) },
+
+        { id: "sec-content", section: "Karya & Tulisan", permission: ["view portofolio", "view artikel", "view kategori"] },
+        { id: "portfolios", label: "Portofolio", route: route("admin.portfolios.index"), permission: "view portofolio", activeRoutes: ["admin.portfolios.*"], icon: icon(FiFolder) },
+        { id: "artikel", label: "Artikel", route: route("admin.artikel.index"), permission: "view artikel", activeRoutes: ["admin.artikel.*"], icon: icon(FiFileText) },
+        { id: "kategori", label: "Kategori Artikel", route: route("admin.kategori.index"), permission: "view kategori", activeRoutes: ["admin.kategori.*"], icon: icon(FiTag) },
+
+        { id: "sec-inbox", section: "Kotak Masuk", permission: "view messages" },
+        { id: "messages", label: "Pesan Masuk", route: route("admin.messages.index"), permission: "view messages", activeRoutes: ["admin.messages.*"], icon: icon(FiInbox), badge: unreadMessages },
+
+        { id: "sec-system", section: "Sistem", permission: ["view settings", "view users", "view roles", "view permissions", "view audit trail"] },
+        { id: "settings", label: "Pengaturan Website", route: route("admin.settings.index"), permission: "view settings", activeRoutes: ["admin.settings.*"], icon: icon(FiSettings) },
+        { id: "users", label: "Pengguna", route: route("admin.users.index"), permission: "view users", activeRoutes: ["admin.users.*"], icon: icon(FiUsers) },
+        { id: "role-permissions", label: "Role & Permission", route: route("admin.role-permissions.index"), permission: ["view roles", "view permissions"], activeRoutes: ["admin.role-permissions.index", "admin.roles.*", "admin.permissions.*"], icon: icon(FiShield) },
+        { id: "audit-trail", label: "Audit Trail", route: route("admin.audit-trail.index"), permission: "view audit trail", activeRoutes: ["admin.audit-trail.*"], icon: icon(FiActivity) },
     ];
 
-    // Filter menu berdasarkan permission user
-    const getFilteredMenuItems = () => {
-        const user = auth.user;
-
-        return menuItems.filter((menu) => {
-            // Check jika menu memiliki permission tertentu
-            if (menu.permission && menu.anyPermission === false) {
-                return hasPermission(menu.permission);
-            }
-
-            // Check jika menu memerlukan salah satu dari beberapa permissions
-            if (menu.anyPermission && menu.permissions) {
-                return hasAnyPermission(menu.permissions);
-            }
-
-            // Check jika menu memerlukan role tertentu
-            if (menu.roles.length > 0 && menu.anyRole === false) {
-                return menu.roles.some((role) => hasRole(role));
-            }
-
-            // Check jika menu memerlukan salah satu dari beberapa roles
-            if (menu.anyRole && menu.roles.length > 0) {
-                return hasAnyRole(menu.roles);
-            }
-
-            // Jika tidak ada permission/role requirement, tampilkan menu
-            return true;
+    const getFilteredMenuItems = () =>
+        menuItems.filter((menu) => {
+            if (!menu.permission) return true;
+            return Array.isArray(menu.permission)
+                ? hasAnyPermission(menu.permission)
+                : hasPermission(menu.permission);
         });
-    };
 
     const filteredMenuItems = getFilteredMenuItems();
 

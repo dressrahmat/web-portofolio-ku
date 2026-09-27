@@ -1,61 +1,81 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# CMS CV & Portofolio — Dedy Septya Rahmat
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Website pribadi berbasis **Laravel 12 + Inertia.js + React 18 + Tailwind**. Semua isi website (profil, pengalaman, keahlian, portofolio, blog, dan CV) dikelola dari panel admin, tanpa mengubah kode.
 
-## About Laravel
+## Fitur
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Website publik**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Halaman | URL | Isi |
+|---|---|---|
+| Beranda | `/` | Hero, Tentang + angka sorotan, Layanan, Karya pilihan, Pengalaman & Pendidikan, Sertifikat, Keahlian, Testimoni, Tulisan terbaru, Form kontak |
+| Portofolio | `/portofolio`, `/portofolio/{slug}` | Daftar karya dengan filter kategori, halaman studi kasus (galeri, fitur, hasil, teknologi, tombol WhatsApp) |
+| Blog | `/blog`, `/blog/{slug}` | Artikel yang berstatus *terbit*, filter kategori, pencarian, penghitung dibaca |
+| CV | `/cv` | CV otomatis dari data admin, siap **Cetak / Simpan PDF** (A4). Tombol **Unduh PDF** muncul jika file CV diunggah |
+| Sitemap | `/sitemap.xml` | Untuk Google Search Console |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Section yang datanya kosong otomatis disembunyikan. Tersedia mode gelap, tombol WhatsApp melayang, meta SEO/Open Graph per halaman, dan script Google Analytics / GTM / Pixel dari menu Pengaturan.
 
-## Learning Laravel
+**Panel admin** (`/login`)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Dashboard** — statistik, checklist kelengkapan CV, pesan terbaru, aksi cepat
+- **Konten CV** — Profil & Kontak (foto, file CV PDF, bio, sosial media, tag hero, angka sorotan), Pengalaman, Pendidikan, Keahlian, Sertifikat & Penghargaan, Layanan, Testimoni. Setiap item bisa diurutkan (↑↓) dan disembunyikan tanpa dihapus
+- **Karya & Tulisan** — Portofolio (sekarang dengan *Peran* dan *Hasil yang dicapai*), Artikel, Kategori
+- **Pesan Masuk** — pesan dari form kontak (tandai dibaca, bintang, balas via email/WhatsApp)
+- **Sistem** — Pengaturan website, Pengguna, Role & Permission, Audit Trail
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Instalasi (baru)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+php artisan storage:link
+npm run build
+php artisan serve
+```
 
-## Laravel Sponsors
+Login awal: `master@example.com` / `password` — **segera ganti email & password** lewat menu profil akun.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Update dari versi sebelumnya (database sudah ada)
 
-### Premium Partners
+```bash
+git pull   # atau salin file baru
+composer install
+php artisan migrate          # membuat tabel CV + kolom portofolio baru
+php artisan db:seed --class=RolePermissionSeeder   # menambah permission "manage cv" & "view messages"
+php artisan db:seed --class=CvSeeder               # opsional: isi data awal (hanya mengisi tabel yang masih kosong)
+php artisan storage:link
+npm run build
+php artisan optimize:clear
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Seeder aman dijalankan ulang: tidak menimpa data yang sudah Anda ubah.
 
-## Contributing
+## Catatan
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Registrasi publik dinonaktifkan** — tambah akun lewat Admin > Pengguna.
+- Role `master` mendapat semua permission. Untuk role lain, centang `manage cv` dan `view messages` di Role & Permission.
+- Form kontak dibatasi 5 kiriman/menit per IP dan punya honeypot anti-bot.
+- Menambah bagian CV baru cukup membuat satu controller turunan `App\Http\Controllers\Admin\Cv\CvResourceController` (definisikan model, field, kolom) lalu daftarkan di `routes/web.php` — form dan tabel admin dibangun otomatis oleh `Pages/Admin/Cv/Manage.jsx`.
 
-## Code of Conduct
+## Testing
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+php artisan test
+```
 
-## Security Vulnerabilities
+## Struktur penting
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+app/Http/Controllers/Front/BerandaController.php   # semua halaman publik
+app/Http/Controllers/Admin/Cv/                     # modul CV (generik + profil)
+app/Http/Controllers/Admin/MessageController.php   # pesan masuk
+app/Models/{Profile,Experience,Education,Skill,Achievement,Service,Testimonial,Message}.php
+database/seeders/CvSeeder.php                      # data awal
+resources/js/Pages/Front/                          # Home, Portfolio, Blog, Cv
+resources/js/Pages/Admin/Cv/                       # Manage.jsx (generik), Profile.jsx
+resources/js/Components/Front/ & Components/Admin/ # komponen UI
+```

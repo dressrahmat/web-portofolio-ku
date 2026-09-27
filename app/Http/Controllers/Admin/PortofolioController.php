@@ -130,13 +130,7 @@ class PortofolioController extends Controller
         $authUser = auth()->user();
 
         return Inertia::render('Admin/Portfolios/Create', [
-            'categories' => [
-                'Fullstack Development',
-                'Frontend Development',
-                'Backend Development',
-                'Mobile Development',
-                'Web Development',
-            ],
+            'categories' => $this->categoryOptions(),
             'auth' => [
                 'user' => [
                     'id' => $authUser->id,
@@ -157,6 +151,8 @@ class PortofolioController extends Controller
             'short_description' => 'nullable|string|max:500',
             'category' => 'required|string|max:100',
             'client_name' => 'nullable|string|max:255',
+            'role' => 'nullable|string|max:255',
+            'results' => 'nullable|string',
             'project_date' => 'nullable|date',
             'project_url' => 'nullable|url|max:255',
             'github_url' => 'nullable|url|max:255',
@@ -179,12 +175,12 @@ class PortofolioController extends Controller
             // Create portfolio
             $portfolioData = $request->only([
                 'title', 'description', 'short_description', 'category',
-                'client_name', 'project_date', 'project_url', 'github_url',
+                'client_name', 'role', 'results', 'project_date', 'project_url', 'github_url',
                 'highlight', 'status', 'sort_order',
             ]);
 
             // Generate slug
-            $portfolioData['slug'] = Str::slug($request->title);
+            $portfolioData['slug'] = Portfolio::uniqueSlug($request->title);
 
             // Handle featured image upload
             if ($request->hasFile('featured_image')) {
@@ -274,13 +270,7 @@ class PortofolioController extends Controller
 
         return Inertia::render('Admin/Portfolios/Edit', [
             'portfolio' => $portfolio,
-            'categories' => [
-                'Fullstack Development',
-                'Frontend Development',
-                'Backend Development',
-                'Mobile Development',
-                'Web Development',
-            ],
+            'categories' => $this->categoryOptions(),
             'auth' => [
                 'user' => [
                     'id' => $authUser->id,
@@ -301,6 +291,8 @@ class PortofolioController extends Controller
             'short_description' => 'nullable|string|max:500',
             'category' => 'required|string|max:100',
             'client_name' => 'nullable|string|max:255',
+            'role' => 'nullable|string|max:255',
+            'results' => 'nullable|string',
             'project_date' => 'nullable|date',
             'project_url' => 'nullable|url|max:255',
             'github_url' => 'nullable|url|max:255',
@@ -326,13 +318,13 @@ class PortofolioController extends Controller
         try {
             $portfolioData = $request->only([
                 'title', 'description', 'short_description', 'category',
-                'client_name', 'project_date', 'project_url', 'github_url',
+                'client_name', 'role', 'results', 'project_date', 'project_url', 'github_url',
                 'highlight', 'status', 'sort_order',
             ]);
 
             // Update slug jika title berubah
             if ($portfolio->title !== $request->title) {
-                $portfolioData['slug'] = Str::slug($request->title);
+                $portfolioData['slug'] = Portfolio::uniqueSlug($request->title, $portfolio->id);
             }
 
             // Handle featured image
@@ -615,5 +607,23 @@ class PortofolioController extends Controller
 
         return redirect()->route('admin.portfolios.index')
             ->with('success', 'Selected portfolios updated successfully.');
+    }
+
+    /**
+     * Opsi kategori: default + kategori yang sudah pernah dipakai.
+     */
+    private function categoryOptions(): array
+    {
+        return collect([
+            'Web Development',
+            'Sistem Informasi',
+            'Company Profile',
+            'Mobile App',
+            'Digital Marketing',
+        ])->merge(Portfolio::distinct()->pluck('category'))
+            ->filter()
+            ->unique()
+            ->values()
+            ->all();
     }
 }

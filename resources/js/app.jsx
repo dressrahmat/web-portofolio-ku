@@ -6,10 +6,10 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createRoot } from "react-dom/client";
 import { ToastProvider } from "./Contexts/ToastContext";
 
-const appName = import.meta.env.VITE_APP_NAME || "Dedy Septya Rahmat";
+const appName = import.meta.env.VITE_APP_NAME || "Portofolio";
 
 createInertiaApp({
-    title: (title) => `Dedy - ${appName}`,
+    title: (title) => title || appName,
     resolve: (name) =>
         resolvePageComponent(
             `./Pages/${name}.jsx`,

@@ -30,10 +30,12 @@ class PortfolioImage extends Model
         return $this->belongsTo(Portfolio::class);
     }
 
+    protected $appends = ['image_url'];
+
     // Accessors
     public function getImageUrlAttribute()
     {
-        return asset('storage/'.$this->image_path);
+        return \App\Support\Media::url($this->image_path);
     }
 
     // Scopes

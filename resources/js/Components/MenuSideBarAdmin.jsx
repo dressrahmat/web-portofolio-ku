@@ -127,29 +127,38 @@ export default function MenuSideBarAdmin({
                     </div>
                 </div>
 
-                <nav className="p-4">
-                    <ul className="space-y-2">
+                <nav className="p-3 overflow-y-auto h-[calc(100vh-4.5rem)]">
+                    <ul className="space-y-1">
                         {menuItems.map((menu) => {
+                            if (menu.section) {
+                                return sidebarExpanded ? (
+                                    <li
+                                        key={menu.id}
+                                        className="pt-4 pb-1 px-2 text-[11px] font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500"
+                                    >
+                                        {menu.section}
+                                    </li>
+                                ) : (
+                                    <li key={menu.id} className="my-2 border-t border-neutral-200 dark:border-neutral-700" />
+                                );
+                            }
+
                             const active = isRouteActive(menu.activeRoutes);
 
                             return (
                                 <li key={menu.id}>
                                     <Link
                                         href={menu.route}
-                                        className={`flex items-center p-2 rounded-md transition-colors duration-200 ${
+                                        className={`relative flex items-center px-2 py-2 rounded-md text-sm transition-colors duration-200 ${
                                             active
-                                                ? "bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-200 border-r-4 border-primary-600 dark:border-primary-400"
+                                                ? "bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-200 font-medium"
                                                 : "hover:bg-neutral-100 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300"
                                         }`}
-                                        title={
-                                            !sidebarExpanded ? menu.label : ""
-                                        }
+                                        title={!sidebarExpanded ? menu.label : ""}
                                     >
-                                        <span className="flex-shrink-0">
-                                            {menu.icon}
-                                        </span>
+                                        <span className="flex-shrink-0">{menu.icon}</span>
                                         <span
-                                            className={`ml-3 transition-all duration-300 ${
+                                            className={`ml-3 flex-1 truncate transition-all duration-300 ${
                                                 sidebarExpanded
                                                     ? "opacity-100"
                                                     : "opacity-0 w-0 overflow-hidden"
@@ -157,6 +166,17 @@ export default function MenuSideBarAdmin({
                                         >
                                             {menu.label}
                                         </span>
+                                        {menu.badge > 0 && (
+                                            <span
+                                                className={`${
+                                                    sidebarExpanded
+                                                        ? "ml-2"
+                                                        : "absolute top-0.5 right-0.5"
+                                                } min-w-[1.25rem] h-5 px-1.5 rounded-full bg-error-500 text-white text-[11px] font-semibold flex items-center justify-center`}
+                                            >
+                                                {menu.badge > 99 ? "99+" : menu.badge}
+                                            </span>
+                                        )}
                                     </Link>
                                 </li>
                             );

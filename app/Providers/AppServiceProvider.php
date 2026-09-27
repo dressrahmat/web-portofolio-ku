@@ -21,5 +21,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Vite::prefetch(concurrency: 3);
+
+        // Nama bulan/hari dalam Bahasa Indonesia (mis. "Des 2016") untuk CV & timeline
+        \Carbon\Carbon::setLocale('id');
     }
 }

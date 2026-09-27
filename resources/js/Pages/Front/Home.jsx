@@ -1,41 +1,45 @@
-// Home.jsx - Diperbarui
-import { motion } from "framer-motion";
+import { usePage } from "@inertiajs/react";
 import MainLayout from "@/Layouts/MainLayout";
-import HeroSection from "@/Pages/Front/HomeSections/HeroSection";
-import AboutSection from "@/Pages/Front/HomeSections/AboutSection";
-import PortfolioSection from "@/Pages/Front/HomeSections/PortfolioSection";
-import ArticlesSection from "@/Pages/Front/HomeSections/ArticlesSection";
-import ContactSection from "@/Pages/Front/HomeSections/ContactSection";
+import HeroSection from "./HomeSections/HeroSection";
+import AboutSection from "./HomeSections/AboutSection";
+import ServicesSection from "./HomeSections/ServicesSection";
+import ExperienceSection from "./HomeSections/ExperienceSection";
+import SkillsSection from "./HomeSections/SkillsSection";
+import PortfolioSection from "./HomeSections/PortfolioSection";
+import TestimonialsSection from "./HomeSections/TestimonialsSection";
+import ArticlesSection from "./HomeSections/ArticlesSection";
+import ContactSection from "./HomeSections/ContactSection";
 
+/**
+ * Beranda: seluruh isi diambil dari panel admin.
+ * Section yang datanya kosong otomatis disembunyikan.
+ */
 export default function Home({
-    settings,
-    portfolios, // Tambahkan prop portfolios
-    metaTags,
-    canLogin,
-    canRegister,
-    laravelVersion,
-    phpVersion,
+    meta,
+    services,
+    experiences,
+    educations,
+    skills,
+    featuredSkills,
+    achievements,
+    testimonials,
+    portfolios,
+    portfolioCount,
+    articles,
 }) {
-    return (
-        <>
-            <title>{metaTags.title} - Product Designer</title>
-            <meta name="description" content={metaTags.description} />
-            <meta name="keywords" content={metaTags.keywords} />
-            <meta name="author" content={metaTags.author} />
-            {metaTags.og_image && (
-                <meta property="og:image" content={metaTags.og_image} />
-            )}
+    const { profile = {} } = usePage().props;
 
-            <MainLayout settings={settings}>
-                <HeroSection settings={settings} />
-                <AboutSection settings={settings} />
-                <PortfolioSection
-                    settings={settings}
-                    portfolios={portfolios} // Kirim prop portfolios ke PortfolioSection
-                />
-                {/* <ArticlesSection settings={settings} /> */}
-                {/* <ContactSection settings={settings} /> */}
-            </MainLayout>
-        </>
+    return (
+        <MainLayout meta={meta}>
+            <HeroSection profile={profile} featuredSkills={featuredSkills} />
+            <AboutSection profile={profile} />
+            <ServicesSection services={services} />
+            <PortfolioSection portfolios={portfolios} total={portfolioCount} />
+            <ExperienceSection experiences={experiences} educations={educations} achievements={achievements} />
+            <SkillsSection skills={skills} />
+            <TestimonialsSection testimonials={testimonials} />
+            <ArticlesSection articles={articles} />
+            <ContactSection profile={profile} />
+        </MainLayout>
     );
 }

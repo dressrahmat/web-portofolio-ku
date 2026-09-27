@@ -25,4 +25,12 @@ class Kategori extends Model
         return $this->belongsToMany(Artikel::class, 'artikel_kategori', 'kategori_id', 'artikel_id')
             ->withTimestamps();
     }
+
+    /**
+     * Alias jamak (dipakai di KategoriController).
+     */
+    public function artikels(): BelongsToMany
+    {
+        return $this->artikel();
+    }
 }

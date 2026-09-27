@@ -61,6 +61,10 @@ class RolePermissionSeeder extends Seeder
             'edit artikel',
             'delete artikel',
 
+            // Permissions untuk konten CV & pesan masuk
+            'manage cv',
+            'view messages',
+
             // Permissions for artikel kategori
             'view artikel kategori',
             'create artikel kategori',

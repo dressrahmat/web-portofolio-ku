@@ -37,41 +37,11 @@ class HandleInertiaRequests extends Middleware
             'timezone' => $user->timezone ?? config('app.timezone'),
             'locale' => $user->locale ?? config('app.locale'),
 
-            // Role information (hanya data yang diperlukan)
-            'role' => [
-                'name' => $user->roles->first()->name ?? 'user',
-                'display_name' => $user->roles->first()->display_name ?? 'User',
-            ],
+            'foto_url' => $user->foto_path ? asset('storage/'.$user->foto_path) : null,
 
-            // Hanya permissions yang diperlukan untuk UI components
-            'permissions' => [
-                // Dashboard & Admin
-                'can_access_dashboard' => $user->can('view dashboard'),
-                'can_access_admin' => $user->can('access admin panel'),
-
-                // Users
-                'can_view_users' => $user->can('view users'),
-                'can_create_users' => $user->can('create users'),
-                'can_edit_users' => $user->can('edit users'),
-                'can_delete_users' => $user->can('delete users'),
-
-                // Roles
-                'can_view_roles' => $user->can('view roles'),
-                'can_create_roles' => $user->can('create roles'),
-                'can_edit_roles' => $user->can('edit roles'),
-                'can_delete_roles' => $user->can('delete roles'),
-
-                // Permissions
-                'can_view_permissions' => $user->can('view permissions'),
-                'can_edit_permissions' => $user->can('edit permissions'),
-
-                // Settings
-                'can_view_settings' => $user->can('view settings'),
-                'can_edit_settings' => $user->can('edit settings'),
-
-                // Audit Trail
-                'can_view_audit_trail' => $user->can('view audit trail'),
-            ],
+            // Nama role & permission (array string) - dipakai AdminLayout untuk memfilter menu
+            'roles' => $user->getRoleNames()->toArray(),
+            'permissions' => $user->getAllPermissions()->pluck('name')->toArray(),
 
             // Metadata
             'email_verified_at' => $user->email_verified_at?->toISOString(),
@@ -320,6 +290,14 @@ class HandleInertiaRequests extends Middleware
             // Settings (filtered - tanpa data sensitif)
             'settings' => $this->getSettings(),
 
+            // Profil publik pemilik website (nama, kontak, sosial media)
+            'profile' => fn () => \App\Models\Profile::publicData(),
+
+            // Jumlah pesan belum dibaca untuk badge menu admin
+            'unreadMessages' => fn () => $request->user()?->can('view messages')
+                ? \App\Models\Message::unread()->count()
+                : 0,
+
             // Flash messages
             'flash' => $this->getFlashMessages($request),
 
@@ -364,15 +342,9 @@ class HandleInertiaRequests extends Middleware
             ! $this->isExcludedFromMaintenance($request) &&
             ! $request->user()?->can('access admin panel')) {
 
-            if ($request->inertia()) {
-                return inertia('Front/Maintenance', [
-                    'message' => $settings->maintenance_message,
-                ]);
-            }
-
-            return response()->view('Front.Maintenance', [
+            return inertia('Front/Maintenance', [
                 'message' => $settings->maintenance_message,
-            ], 503);
+            ])->toResponse($request)->setStatusCode(503);
         }
 
         return parent::handle($request, $next);

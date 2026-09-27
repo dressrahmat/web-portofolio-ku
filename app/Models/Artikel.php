@@ -30,6 +30,32 @@ class Artikel extends Model
     ];
 
     /**
+     * URL gambar utama.
+     */
+    public function getGambarUrlAttribute(): ?string
+    {
+        return \App\Support\Media::url($this->gambar_utama);
+    }
+
+    /**
+     * Ringkasan teks (tanpa HTML).
+     */
+    public function getRingkasanAttribute(): string
+    {
+        $source = $this->meta_deskripsi ?: strip_tags((string) $this->konten);
+
+        return \Illuminate\Support\Str::limit(trim(preg_replace('/\s+/', ' ', html_entity_decode($source))), 180);
+    }
+
+    /**
+     * Estimasi waktu baca (menit).
+     */
+    public function getWaktuBacaAttribute(): int
+    {
+        return max(1, (int) ceil(str_word_count(strip_tags((string) $this->konten)) / 200));
+    }
+
+    /**
      * Get the kategori associated with the artikel.
      */
     public function kategori(): BelongsToMany
