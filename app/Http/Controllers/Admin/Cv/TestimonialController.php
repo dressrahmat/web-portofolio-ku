@@ -23,7 +23,7 @@ class TestimonialController extends CvResourceController
             ['name' => 'company', 'label' => 'Lembaga / Perusahaan', 'type' => 'text', 'col' => 'half'],
             ['name' => 'rating', 'label' => 'Rating (1-5)', 'type' => 'number', 'default' => 5, 'rules' => 'nullable|integer|min:1|max:5', 'col' => 'half'],
             ['name' => 'content', 'label' => 'Isi testimoni', 'type' => 'textarea', 'rows' => 4, 'required' => true],
-            ['name' => 'photo', 'label' => 'Foto (opsional)', 'type' => 'image'],
+            ['name' => 'photo', 'label' => 'Foto (opsional)', 'type' => 'image', 'aspect' => 1, 'round' => true, 'sizes' => [300, 500]],
             ['name' => 'is_visible', 'label' => 'Tampilkan di website', 'type' => 'checkbox', 'default' => true],
         ];
     }

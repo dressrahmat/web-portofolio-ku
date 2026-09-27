@@ -27,7 +27,9 @@ class AchievementController extends CvResourceController
             ['name' => 'credential_id', 'label' => 'ID Kredensial', 'type' => 'text', 'col' => 'half'],
             ['name' => 'credential_url', 'label' => 'Link verifikasi', 'type' => 'url', 'placeholder' => 'https://'],
             ['name' => 'description', 'label' => 'Keterangan', 'type' => 'textarea', 'rows' => 3],
-            ['name' => 'image', 'label' => 'Gambar sertifikat (opsional)', 'type' => 'image'],
+            ['name' => 'image', 'label' => 'Gambar sertifikat (opsional)', 'type' => 'image',
+                'aspects' => [['label' => 'Lanskap 4:3', 'value' => 4 / 3], ['label' => 'Persegi 1:1', 'value' => 1], ['label' => 'Bebas', 'value' => null]],
+                'sizes' => [800, 1200]],
             ['name' => 'is_visible', 'label' => 'Tampilkan di website', 'type' => 'checkbox', 'default' => true],
         ];
     }
