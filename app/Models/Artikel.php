@@ -34,6 +34,11 @@ class Artikel extends Model
      */
     public function getGambarUrlAttribute(): ?string
     {
+        // 'default-article.jpg' adalah placeholder lama yang filenya tidak ada
+        if (! $this->gambar_utama || $this->gambar_utama === 'default-article.jpg') {
+            return null;
+        }
+
         return \App\Support\Media::url($this->gambar_utama);
     }
 

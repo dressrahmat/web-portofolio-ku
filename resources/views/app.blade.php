@@ -2,6 +2,9 @@
     $s = $blade_settings ?? [];
     $isAdmin = request()->is('admin*', 'dashboard', 'profile', 'login', 'forgot-password', 'reset-password*');
     $tracking = $s['tracking'] ?? [];
+    // Meta SEO dari controller (BerandaController::meta()). Ditulis di HTML awal supaya
+    // WhatsApp/Facebook/Telegram/Google yang tidak menjalankan JavaScript tetap bisa membacanya.
+    $meta = $page['props']['meta'] ?? null;
 @endphp
 <!DOCTYPE html>
 <html lang="id">
@@ -9,7 +12,34 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title inertia>{{ $s['site_name'] ?? config('app.name', 'Laravel') }}</title>
+        <title inertia>{{ $meta['title'] ?? ($s['site_name'] ?? config('app.name', 'Laravel')) }}</title>
+        @if ($meta)
+            @if (! empty($meta['description']))
+                <meta inertia="description" name="description" content="{{ $meta['description'] }}">
+                <meta inertia="og:description" property="og:description" content="{{ $meta['description'] }}">
+            @endif
+            @if (! empty($meta['author']))
+                <meta inertia="author" name="author" content="{{ $meta['author'] }}">
+            @endif
+            @if (! empty($meta['url']))
+                <link inertia="canonical" rel="canonical" href="{{ $meta['url'] }}">
+                <meta inertia="og:url" property="og:url" content="{{ $meta['url'] }}">
+            @endif
+            <meta inertia="og:type" property="og:type" content="{{ $meta['type'] ?? 'website' }}">
+            <meta inertia="og:title" property="og:title" content="{{ $meta['title'] ?? '' }}">
+            <meta property="og:site_name" content="{{ $s['site_name'] ?? config('app.name') }}">
+            <meta property="og:locale" content="id_ID">
+            @if (! empty($meta['image']))
+                <meta inertia="og:image" property="og:image" content="{{ $meta['image'] }}">
+                <meta property="og:image:alt" content="{{ $meta['title'] ?? '' }}">
+                <meta name="twitter:image" content="{{ $meta['image'] }}">
+            @endif
+            <meta inertia="twitter:card" name="twitter:card" content="{{ ! empty($meta['image']) ? 'summary_large_image' : 'summary' }}">
+            <meta name="twitter:title" content="{{ $meta['title'] ?? '' }}">
+            @if (! empty($meta['description']))
+                <meta name="twitter:description" content="{{ $meta['description'] }}">
+            @endif
+        @endif
         <meta name="csrf-token" content="{{ csrf_token() }}">
         @if (! empty($s['site_favicon']))
             <link rel="icon" href="{{ $s['site_favicon'] }}">
